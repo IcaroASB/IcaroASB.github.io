@@ -161,7 +161,7 @@
     }
 
     function loadCollection(collection) {
-      fetch(`artworks/${collection}.json`)
+      fetch(`collections/${collection}.json`)
         .then(res => res.json())
         .then(data => {
           gallery.innerHTML = '';
