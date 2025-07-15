@@ -21,6 +21,15 @@
       justify-content: center;
     }
 
+    .collections-section {
+      padding: 1rem 1.5rem 0;
+    }
+
+    .collections-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
     .collections-bar {
       display: flex;
       overflow-x: auto;
@@ -121,13 +130,16 @@
     <a href="index.html" style="color:#eee;text-decoration:none;font-size:1.2rem;font-weight:bold;">← Back to Home</a>
   </nav>
 
-  <div class="collections-bar" id="collections-bar">
-    <div class="collection-tab active" data-collection="portraits">Portraits</div>
-    <div class="collection-tab" data-collection="sketches">Sketches</div>
-    <div class="collection-tab" data-collection="landscapes">Landscapes</div>
-    <div class="collection-tab" data-collection="abstracts">Abstracts</div>
-    <div class="collection-tab" data-collection="ink">Ink Work</div>
-  </div>
+  <section class="collections-section">
+    <h2>Collections</h2>
+    <div class="collections-bar" id="collections-bar">
+      <div class="collection-tab active" data-collection="portraits">Portraits</div>
+      <div class="collection-tab" data-collection="sketches">Sketches</div>
+      <div class="collection-tab" data-collection="landscapes">Landscapes</div>
+      <div class="collection-tab" data-collection="abstracts">Abstracts</div>
+      <div class="collection-tab" data-collection="ink">Ink Work</div>
+    </div>
+  </section>
 
   <section class="gallery" id="gallery"></section>
 
@@ -149,7 +161,7 @@
     }
 
     function loadCollection(collection) {
-      fetch(`collections/${collection}.json`)
+      fetch(`artworks/${collection}.json`)
         .then(res => res.json())
         .then(data => {
           gallery.innerHTML = '';
