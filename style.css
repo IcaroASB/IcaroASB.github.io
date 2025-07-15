@@ -91,7 +91,8 @@ nav a {
   padding: 0.3rem 0.5rem;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown:hover .dropdown-content,
+.dropdown-content:hover {
   display: block;
 }
 
