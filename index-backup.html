@@ -43,10 +43,93 @@
     </div>
   </section> -->
 
+  <section id="about">
+    <h2>About</h2>
+    <p>Welcome to Yvon's world of charcoal and graphite. This section will include a full bio, artistic influences, and creative process.</p>
+  </section>
+
+  <section id="collections">
+    <h2>Collections</h2>
+    <div class="collections-bar" id="collections-bar">
+      <div class="collection-tab active" data-collection="portraits">Portraits</div>
+      <div class="collection-tab" data-collection="sketches">Sketches</div>
+      <div class="collection-tab" data-collection="landscapes">Landscapes</div>
+      <div class="collection-tab" data-collection="abstracts">Abstracts</div>
+      <div class="collection-tab" data-collection="ink">Ink Work</div>
+    </div>
+    <section class="gallery" id="gallery"></section>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>You can reach out via email for inquiries, commissions, or collaborations.</p>
+    <a href="mailto:your.email@example.com">your.email@example.com</a>
+  </section>
+
   <div id="modal" onclick="closeModal()">
     <img id="modal-img" src="" alt="Zoomed Art" />
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const tabs = document.querySelectorAll('.collection-tab');
+    const gallery = document.getElementById('gallery');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+    let currentArtTitle = '';
+
+    function setActiveTab(selectedTab) {
+      tabs.forEach(tab => tab.classList.remove('active'));
+      selectedTab.classList.add('active');
+    }
+
+    function loadCollection(collection) {
+      fetch(`collections/${collection}.json`)
+        .then(res => res.json())
+        .then(data => {
+          gallery.innerHTML = '';
+          data.forEach(art => {
+            const div = document.createElement('div');
+            div.className = 'art-piece';
+            div.innerHTML = `
+              <img src="images/${art.filename}" alt="${art.title}" onclick="openModal(event, '${art.filename}', '${art.title}')" />
+              <p class="caption">"${art.title}" — ${art.status}</p>
+            `;
+            gallery.appendChild(div);
+          });
+        })
+        .catch(err => {
+          gallery.innerHTML = '<p style="color: red;">Error loading collection.</p>';
+        });
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        setActiveTab(tab);
+        loadCollection(tab.dataset.collection);
+      });
+    });
+
+    function openModal(event, filename, title) {
+      event.stopPropagation();
+      currentArtTitle = title;
+      modal.style.display = 'flex';
+      modalImg.src = `images/${filename}`;
+    }
+
+    function closeModal(event) {
+      if (event.target.id === 'modal' || event.target.tagName === 'IMG') {
+        modal.style.display = 'none';
+      }
+    }
+
+    function openInquiry(event) {
+      event.stopPropagation();
+      const mailto = `mailto:your.email@example.com?subject=Inquiry about "${currentArtTitle}"`;
+      window.location.href = mailto;
+    }
+
+    loadCollection('portraits');
+  </script>
 </body>
 </html>
+
