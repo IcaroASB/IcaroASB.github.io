@@ -2,18 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yvon Does Art</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Art Portfolio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <nav>
     <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#collections">Collections</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li class="dropdown">
+        <a href="#">Collections ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Sketches</a></li>
+          <li><a href="#">Portraits</a></li>
+          <li><a href="#">Landscapes</a></li>
+        </ul>
+      </li>
     </ul>
   </nav>
+
+  <header>
+    <h1>Yvon Lu</h1>
+    <p>Charcoal & Graphite Artist</p>
+  </header>
+
+  <section class="gallery">
+  <!-- Images will load here via JS -->
+  </section>
+
+  <!-- Previous Interation: Images on HTML
+  <section class="gallery">
+    <div class="art-piece" onclick="openModal(this)">
+      <img src="images/art1.jpg" alt="Art 1" />
+      <p class="caption">"Stillness" — Sold</p>
+    </div>
+    <div class="art-piece" onclick="openModal(this)">
+      <img src="images/art2.jpg" alt="Art 2" />
+      <p class="caption">"Morning Light" — Available</p>
+    </div>
+  </section> -->
 
   <section id="about">
     <h2>About</h2>
@@ -38,9 +66,8 @@
     <a href="mailto:your.email@example.com">your.email@example.com</a>
   </section>
 
-  <div id="modal" onclick="closeModal(event)">
+  <div id="modal" onclick="closeModal()">
     <img id="modal-img" src="" alt="Zoomed Art" />
-    <button class="inquiry-button" onclick="openInquiry(event)">Inquire About This Piece</button>
   </div>
 
   <script>
@@ -56,7 +83,7 @@
     }
 
     function loadCollection(collection) {
-      fetch(`artworks/${collection}.json`)
+      fetch(`collections/${collection}.json`)
         .then(res => res.json())
         .then(data => {
           gallery.innerHTML = '';
@@ -105,3 +132,4 @@
   </script>
 </body>
 </html>
+
