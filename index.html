@@ -7,6 +7,20 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <nav>
+    <ul>
+      <li><a href="#">About</a></li>
+      <li class="dropdown">
+        <a href="#">Collections ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Sketches</a></li>
+          <li><a href="#">Portraits</a></li>
+          <li><a href="#">Landscapes</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
   <header>
     <h1>Your Name</h1>
     <p>Charcoal & Graphite Artist</p>
@@ -14,16 +28,17 @@
 
   <section class="gallery">
     <div class="art-piece" onclick="openModal(this)">
-      <img src="images/art1.jpg" alt="Art 1"/>
+      <img src="images/art1.jpg" alt="Art 1" />
+      <p class="caption">"Stillness" — Sold</p>
     </div>
     <div class="art-piece" onclick="openModal(this)">
-      <img src="images/art2.jpg" alt="Art 2"/>
+      <img src="images/art2.jpg" alt="Art 2" />
+      <p class="caption">"Morning Light" — Available</p>
     </div>
-    <!-- Add more art pieces like this -->
   </section>
 
   <div id="modal" onclick="closeModal()">
-    <img id="modal-img" src="" alt="Zoomed Art"/>
+    <img id="modal-img" src="" alt="Zoomed Art" />
   </div>
 
   <script src="script.js"></script>
