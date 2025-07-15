@@ -1,0 +1,48 @@
+body {
+  background: #111;
+  color: #eee;
+  font-family: 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  text-align: center;
+  padding: 2rem;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.art-piece img {
+  height: 200px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #444;
+  transition: transform 0.3s ease;
+}
+
+.art-piece img:hover {
+  transform: scale(1.05);
+}
+
+#modal {
+  position: fixed;
+  display: none;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border: 3px solid white;
+}
