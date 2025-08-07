@@ -27,3 +27,19 @@ fetch('artworks.json')
   })
   .catch(err => console.error('Error loading artwork:', err));
 
+
+  // For the form in Gallery
+function toggleForm(event) {
+  event.stopPropagation();
+  const form = document.getElementById('inquiry-form');
+  const titleInput = document.getElementById('form-art-title');
+  form.style.display = 'block';
+  titleInput.value = currentArtTitle;
+}
+
+function submitForm(event) {
+  // Optional: hide modal after submission
+  setTimeout(() => {
+    modal.style.display = 'none';
+  }, 300);
+}
