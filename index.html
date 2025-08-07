@@ -16,6 +16,7 @@
       <li><a href="gallery.html">Gallery</a></li>
       <a href="#gallery">Gallery (Preview)</a>
       <li class="dropdown">
+
         <!-- Placeholder for Yvon to see if she likes dropd} -->
         <a href="#">Collections ▾</a> 
         <ul class="dropdown-content">
@@ -49,11 +50,10 @@
     <div class="gallery" id="gallery-images"></div>
   </section>
 
+
   <div id="modal" onclick="closeModal(event)">
     <div id="modal-content">
       <button id="modal-close" onclick="closeModal(event)">×</button>
-
-      <!-- image + overlay moved together -->
       <div class="modal-image-wrapper">
         <img id="modal-img" src="" alt="Zoomed Art" />
         <div class="modal-overlay-text">
@@ -61,7 +61,6 @@
           <div id="modal-art-status"></div>
         </div>
       </div>
-
       <div class="modal-form-container">
         <h3 class="form-title">Inquire About This Piece</h3>
         <!-- Using my email, replace with yvon. Can also make it a string to keep email hidden -->
@@ -116,8 +115,10 @@
     const gallery = document.getElementById('gallery-images');
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modal-img');
+    const form = document.getElementById('inquiry-form');
     const formArtTitle = document.getElementById('form-art-title');
     const description = document.getElementById('collection-description');
+    let currentArtTitle = '';
 
     function setActiveTab(selectedTab) {
       tabs.forEach(tab => tab.classList.remove('active'));
@@ -134,11 +135,7 @@
             const div = document.createElement('div');
             div.className = 'art-piece';
             div.innerHTML = `
-              <img 
-                src="images/${art.filename}" 
-                alt="${art.title}" 
-                onclick="openModal(event, '${art.filename}', '${art.title}', '${art.status}')"
-              />
+              <img src="images/${art.filename}" alt="${art.title}" onclick="openModal(event, '${art.filename}', '${art.title}')" />
               <p class="caption">"${art.title}" — ${art.status}</p>
             `;
             gallery.appendChild(div);
@@ -159,41 +156,55 @@
     function openModal(event, filename, title, status) {
       event.stopPropagation();
       modal.style.display = 'flex';
+
       modalImg.src = `images/${filename}`;
       formArtTitle.value = title;
-      document.getElementById("modal-art-title").textContent = title;
-      document.getElementById("modal-art-status").textContent = status;
+
+      // Set the overlay title and status
+      document.getElementById("modal-art-title").textContent = title || "";
+      document.getElementById("modal-art-status").textContent = status || "";
     }
 
     function closeModal(event) {
       const modalContent = document.getElementById('modal-content');
+
+      // Shrink safe zone by adding a buffer box slightly *larger* than modal-content
       const rect = modalContent.getBoundingClientRect();
-      const buffer = 10;
-      const inside = (
+      const buffer = 10; // pixels of tolerance
+
+      const isInsideSafeZone = (
         event.clientX > rect.left - buffer &&
         event.clientX < rect.right + buffer &&
         event.clientY > rect.top - buffer &&
         event.clientY < rect.bottom + buffer
       );
-      if (!inside) modal.style.display = 'none';
+
+      if (!isInsideSafeZone) {
+        modal.style.display = 'none';
+      }
     }
 
     function handleSubmit(event) {
       event.preventDefault();
       const form = event.target;
+
       setTimeout(() => {
-        form.submit();
-        modal.style.display = 'none';
-        form.reset();
-        showToast();
+        form.submit();                     // submit to hidden iframe
+        modal.style.display = 'none';      // close zoom modal
+        form.reset();                      // reset the form fields
+        showToast();                       // show toast message
       }, 100);
     }
 
     function showToast() {
       const toast = document.getElementById('toast');
       toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 4000);
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000); // Show for 3 seconds
     }
+
 
     loadCollection('portraits');
   </script>
@@ -216,23 +227,39 @@
       font-family: 'Playfair Display', serif;
     }
 
-    /* force Collections heading to title font */
+    /* Body text */
+    body, p, label, input, textarea, /*button,*/ .collection-description, .caption {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    h1 {
+      font-size: 2.7rem; /* up from 2.5 */
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    label,
+    input,
+    textarea,
+    button {
+      font-size: 1rem; /* up from 0.9 or 0.95 */
+    }
+
+    .collections-section {
+      padding: 0rem 0rem 0;
+    }
+
     .collections-section h2 {
-      font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       margin-bottom: 0.5rem;
       padding-left: 1.5rem;
     }
-
-    /* Body text */
-    body, p, label, input, textarea, .collection-description, .caption {
-      font-family: 'Cormorant Garamond', serif;
-    }
-
-    h1 { font-size: 2.7rem; }
-    h2 { font-size: 2rem; }
-    h3 { font-size: 1.5rem; }
-    label, input, textarea, button { font-size: 1rem; }
 
     .collections-bar {
       height: 2.8rem;
@@ -242,177 +269,331 @@
       background-color: #222;
       scrollbar-width: none;
       position: relative;
-      padding: 0;
+      padding: 0; /* ensure no vertical padding */
     }
-    .collections-bar::-webkit-scrollbar { display: none; }
+
+    .collections-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Fading Edges */
     .collections-bar::before,
     .collections-bar::after {
       content: "";
       position: absolute;
-      top: 0; bottom: 0; width: 1rem;
-      z-index: 1; pointer-events: none;
+      top: 0;
+      bottom: 0;
+      width: 1rem;
+      z-index: 1;
+      pointer-events: none;
     }
+
     .collections-bar::before {
-      left: 0; background: linear-gradient(to right, #111, transparent);
+      left: 0;
+      background: linear-gradient(to right, #111, transparent);
     }
+
     .collections-bar::after {
-      right: 0; background: linear-gradient(to left, #111, transparent);
+      right: 0;
+      background: linear-gradient(to left, #111, transparent);
     }
 
     .collection-tab {
-      display: flex; align-items: center; justify-content: center;
-      color: #bbb; background-color: #222;
-      border-left: 1px solid #555; border-right: 1px solid #555;
-      margin: 0; cursor: pointer; transition: background-color 0.3s;
-      flex-shrink: 0; height: 100%; box-sizing: border-box;
-      padding: 0 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      background-color: #222;
+      border-left: 1px solid #555;
+      border-right: 1px solid #555;
+      margin: 0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      flex-shrink: 0;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 0 1.2rem; /* remove vertical padding */
     }
-    .collection-tab:first-child { border-left: none; }
-    .collection-tab:last-child { border-right: none; }
-    .collection-tab.active { background-color: #444; color: #fff; }
-    .collection-tab:hover { background-color: #333; }
 
-    .collection-description { padding-left: 1.5rem; }
+    .collection-tab:first-child {
+      border-left: none;
+    }
+
+    .collection-tab:last-child {
+      border-right: none;
+    }
+
+    .collection-tab.active {
+      background-color: #444;
+      color: #fff;
+      box-shadow: none
+    }
+
+    .collection-tab:hover {
+      background-color: #333;
+    }
+
+    .collection-description {
+      padding-left: 1.5rem;
+    }
 
     .gallery {
-      display: flex; flex-wrap: wrap; justify-content: center;
-      gap: 1rem; padding: 2rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem 1rem;
     }
 
     .art-piece img {
-      height: 200px; object-fit: cover;
-      cursor: pointer; border: 2px solid #444;
+      height: 200px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid #444;
       transition: transform 0.3s ease;
     }
-    .art-piece img:hover { transform: scale(1.05); }
+
+    .art-piece img:hover {
+      transform: scale(1.05);
+    }
 
     .caption {
-      text-align: center; margin-top: 0.5rem;
-      color: #bbb; font-style: italic; font-size: 0.9rem;
+      text-align: center;
+      margin-top: 0.5rem;
+      color: #bbb;
+      font-style: italic;
+      font-size: 0.9rem;
     }
 
     #modal {
-      position: fixed; display: none;
+      position: fixed;
+      display: none;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.9);
-      justify-content: center; align-items: center;
-      flex-direction: column; z-index: 10;
-    }
-
-    #modal-content {
-      display: flex; flex-direction: row;
-      align-items: flex-start; gap: 2rem;
-      max-width: 90%; flex-wrap: wrap;
       justify-content: center;
-      position: relative; /* for close button & overlay */
+      align-items: center;
+      flex-direction: column;
+      z-index: 10;
     }
 
-    #modal-close {
-      position: absolute; top: 15px; right: 10px;
-      font-size: 2rem; color: white;
-      background: transparent; border: none;
-      cursor: pointer; z-index: 11;
-    }
-    #modal-close:hover { color: #ccc; }
-
-    .modal-image-wrapper {
-      position: relative; display: inline-block;
-      width: fit-content; max-width: 100%;
-    }
-    .modal-image-wrapper img {
-      display: block; width: 100%; height: auto;
+    #modal img {
+      max-width: 90%;
+      max-height: 70%;
+      margin-bottom: 1rem;
       border: 3px solid white;
     }
-    .modal-overlay-text {
-      position: absolute; top: 1rem; left: 50%;
-      transform: translateX(-50%); text-align: center;
-      color: white; z-index: 2; pointer-events: none;
+
+    .inquiry-button {
+      padding: 0.5rem 1rem;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
     }
-    #modal-art-title {
-      font-size: 1.5rem; font-weight: bold; margin-bottom: 0.25rem;
+
+    .inquiry-button:hover {
+      background-color: #666;
     }
-    #modal-art-status {
-      font-size: 1rem; font-style: italic; opacity: 0.85;
+ 
+    #modal-content {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 2rem;
+      max-width: 90%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    #modal-content img {
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
     }
 
     .modal-form-container {
-      display: flex; flex-direction: column; gap: 0.5rem;
-      max-width: 300px; color: white;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 300px;
+      color: white;
     }
+
     .modal-form-container label {
-      display: flex; flex-direction: column; font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      font-size: 0.9rem;
     }
+
     .modal-form-container input,
     .modal-form-container textarea {
-      margin-top: 0.3rem; padding: 0.4rem;
-      background: #222; border: 1px solid #555;
-      color: white; border-radius: 4px; font-size: 0.9rem;
+      margin-top: 0.3rem;
+      padding: 0.4rem;
+      background: #222;
+      border: 1px solid #555;
+      color: white;
+      border-radius: 4px;
+      font-size: 0.9rem;
     }
+
     .modal-form-container button {
-      background-color: #444; color: white;
-      border: none; padding: 0.5rem; margin-top: 0.5rem;
-      border-radius: 4px; cursor: pointer; font-size: 0.95rem;
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.95rem;
     }
+
     .modal-form-container button:hover {
       background-color: #666;
     }
 
-    .inquiry-button {
-      padding: 0.5rem 1rem; background-color: #444;
-      color: #fff; border: none; border-radius: 5px;
-      cursor: pointer; font-size: 1rem;
+    .modal-image-wrapper {
+      position: relative;
     }
-    .inquiry-button:hover { background-color: #666; }
+
+    .modal-overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .modal-image-wrapper img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 3px solid white;
+    }
+
+    #modal-art-title {
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+
+    #modal-art-status {
+      font-style: italic;
+      opacity: 0.85;
+    }
+
 
     .form-title {
-      margin: 0.5rem 0; color: white;
-      font-size: 1.2rem; text-align: center;
+      margin: 0.5rem 0;
+      color: white;
+      font-size: 1.2rem;
+      text-align: center;
     }
 
     .toast {
-      visibility: hidden; min-width: 250px;
-      background-color: #333; color: #fff;
-      text-align: center; border-radius: 8px;
-      padding: 1rem; position: fixed;
-      bottom: 40%; left: 50%;
-      transform: translateX(-50%); z-index: 999;
-      font-size: 1rem; opacity: 0;
+      visibility: hidden;
+      min-width: 250px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 1rem;
+      position: fixed;
+      bottom: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      font-size: 1rem;
+      opacity: 0;
       transition: opacity 0.5s, visibility 0.5s;
     }
+
     .toast.show {
-      visibility: visible; opacity: 1;
+      visibility: visible;
+      opacity: 1;
     }
 
-    .right-padded { padding-left: 1.5rem; }
+    #modal-close {
+      position: absolute;
+      top: 15px;
+      right: 10px;
+      font-size: 2rem;
+      color: white;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 11;
+    }
 
     .hero-header {
-      position: relative; width: 100%;
-      overflow: hidden; aspect-ratio: 4 / 3;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      aspect-ratio: 4 / 3; /* adjust as needed, or use height for stricter control */
     }
+
     .hero-bg {
-      position: absolute; width: 100%; height: 100%;
-      object-fit: cover; top: 0; left: 0; z-index: 1;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* keeps aspect ratio and fills */
+      top: 0;
+      left: 0;
+      z-index: 1;
     }
+
     .hero-text {
-      position: relative; z-index: 2;
-      text-align: center; color: white;
-      padding: 2rem 1rem; font-size: 1.2rem;
-      background: rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      padding: 2rem 1rem;
+      font-size: 1.2rem;
+      background: rgba(0, 0, 0, 0.4); /* optional soft overlay */
     }
-    .hero-text h1 { margin: 0; font-size: 2.5rem; }
+
+    .hero-text h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
     .hero-text p {
-      margin: 0.5rem 0 0; font-size: 1.1rem;
+      margin: 0.5rem 0 0;
+      font-size: 1.1rem;
+    }
+
+
+
+    .right-padded {
+      padding-left: 1.5rem;
+    }
+
+
+    /* Slightly shift X inward only on larger screens */
+    @media (min-width: 768px) {
+      #modal-close {
+        top: 25px;
+        right: 12%;
+      }
+    }
+
+    #modal-close:hover {
+      color: #ccc;
     }
 
     @media (max-width: 768px) {
       #modal-content {
-        flex-direction: column; align-items: center;
+        flex-direction: column;
+        align-items: center;
       }
-      .modal-form-container { width: 90%; }
+
+      .modal-form-container {
+        width: 90%;
+      }
     }
   </style>
 
 </body>
 </html>
-
 
