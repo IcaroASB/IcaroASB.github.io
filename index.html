@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Art Portfolio</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="images/temp_icon.png" />
+  <link rel="apple-touch-icon" href="images/temp_icon.png">
 </head>
 <body>
   <nav>
@@ -222,14 +224,14 @@
     }
 
     .collections-bar {
+      height: 2.8rem;
       display: flex;
       overflow-x: auto;
       white-space: nowrap;
       background-color: #222;
-      padding: 0.5rem 0;
       scrollbar-width: none;
       position: relative;
-      align-items: stretch;
+      padding: 0; /* ensure no vertical padding */
     }
 
     .collections-bar::-webkit-scrollbar {
@@ -266,13 +268,13 @@
       background-color: #222;
       border-left: 1px solid #555;
       border-right: 1px solid #555;
-      padding: 0.6rem 1.2rem;
       margin: 0;
       cursor: pointer;
       transition: background-color 0.3s;
       flex-shrink: 0;
-      min-height: 100%; /* NEW: ensures it fills parent height */
-      box-sizing: border-box; /* ensures padding doesn't overflow */
+      height: 100%;
+      box-sizing: border-box;
+      padding: 0 1.2rem; /* remove vertical padding */
     }
 
     .collection-tab:first-child {
