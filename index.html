@@ -52,6 +52,10 @@
 
 
   <div id="modal" onclick="closeModal(event)">
+    <div class="modal-overlay-text">
+      <div id="modal-art-title"></div>
+      <div id="modal-art-status"></div>
+    </div>
     <div id="modal-content">
       <button id="modal-close" onclick="closeModal(event)">×</button>
       <img id="modal-img" src="" alt="Zoomed Art" />
@@ -97,12 +101,12 @@
     </div>
   </section> -->
 
-  <section id="about">
+  <section id="about" class="right-padded">
     <h2>About</h2>
     <p>Welcome to Yvon's world of charcoal and graphite. This section will include a full bio, artistic influences, and creative process.</p>
   </section>
 
-  <section id="contact">
+  <section id="contact" class="right-padded">
     <h2>Contact</h2>
     <p>You can reach out via email for inquiries, commissions, or collaborations.</p>
     <a href="mailto:your.email@example.com">your.email@example.com</a>
@@ -151,16 +155,16 @@
       });
     });
 
-    function openModal(event, filename, title) {
+    function openModal(event, filename, title, status) {
       event.stopPropagation();
-      currentArtTitle = title;
       modal.style.display = 'flex';
-      modalImg.src = `images/${filename}`;
-      formArtTitle.value = currentArtTitle;
 
-      document.getElementById('modal-title').textContent = title;
-      document.getElementById('modal-status').textContent = status;
-      document.getElementById('modal-caption').style.display = 'block';
+      modalImg.src = `images/${filename}`;
+      formArtTitle.value = title;
+
+      // Set the overlay title and status
+      document.getElementById("modal-art-title").textContent = title || "";
+      document.getElementById("modal-art-status").textContent = status || "";
     }
 
     function closeModal(event) {
@@ -424,29 +428,30 @@
       background-color: #666;
     }
 
-    .modal-overlay-caption {
+    .modal-overlay-text {
       position: absolute;
-      top: 20px;
+      top: 1rem;
       left: 50%;
       transform: translateX(-50%);
-      color: white;
-      text-align: center;
-      font-size: 1.2rem;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 0.4rem 1rem;
-      border-radius: 8px;
       z-index: 11;
+      text-align: center;
+      color: white;
+      font-family: 'Playfair Display', serif;
+      pointer-events: none;
     }
 
-    #modal-title {
+    #modal-art-title {
+      font-size: 1.5rem;
       font-weight: bold;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.25rem;
     }
 
-    #modal-status {
-      font-style: italic;
+    #modal-art-status {
       font-size: 1rem;
+      font-style: italic;
+      opacity: 0.85;
     }
+
 
     .form-title {
       margin: 0.5rem 0;
@@ -539,12 +544,16 @@
       font-family: 'Cormorant Garamond', serif;
     }
 
+    .right-padded {
+      padding-left: 1.5rem;
+    }
+
 
     /* Slightly shift X inward only on larger screens */
     @media (min-width: 768px) {
       #modal-close {
-        top: 15px;
-        right: 10%;
+        top: 25px;
+        right: 12%;
       }
     }
 
