@@ -30,11 +30,8 @@
     <p>Charcoal & Graphite Artist</p>
   </header>
 
+   <!-- testing one-pager. Remove later -->
   <section class="gallery">
-    <nav>
-      <a href="index.html" style="color:#eee;text-decoration:none;font-size:1.2rem;font-weight:bold;">Back to Home</a>
-    </nav>
-
     <section class="collections-section">
       <h2>Collections</h2>
       <div class="collections-bar" id="collections-bar">
@@ -49,37 +46,19 @@
 
     <section class="gallery" id="gallery"></section>
 
-  <div id="modal" onclick="closeModal(event)">
-    <img id="modal-img" src="" alt="Zoomed Art" />
-    <button class="inquiry-button" onclick="toggleForm(event)">Inquire About This Piece</button>
-    <!-- testing w/ my email. Change later -->
-    <form id="inquiry-form" action="https://formsubmit.co/icaroabacelar@gmail.com" method="POST" onsubmit="submitForm(event)" style="display: none;">
-      <input type="hidden" name="artTitle" id="form-art-title" />
-      
-      <label>
-        Your Name:
-        <input type="text" name="name" required />
-      </label>
-      
-      <label>
-        Your Email:
-        <input type="email" name="email" required />
-      </label>
-      
-      <label>
-        Message:
-        <textarea name="message" rows="4" required></textarea>
-      </label>
-      
-      <!-- Optional: Disable CAPTCHA. Don't think it will be spammed and captcha is annoying -->
-      <input type="hidden" name="_captcha" value="false">
-
-      <!-- Optional: Redirect after submission. Check if you like -->
-      <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
-
-      <button type="submit">Send Inquiry</button>
-    </form>
-  </div>
+    <div id="modal" onclick="closeModal(event)">
+      <img id="modal-img" src="" alt="Zoomed Art" />
+      <button class="inquiry-button" onclick="toggleForm(event)">Inquire About This Piece</button>
+      <form id="inquiry-form" action="https://formsubmit.co/icaroabacelar@gmail.com" method="POST" onsubmit="submitForm(event)" style="display: none;">
+        <input type="hidden" name="artTitle" id="form-art-title" />
+        <label>Your Name: <input type="text" name="name" required /></label>
+        <label>Your Email: <input type="email" name="email" required /></label>
+        <label>Message: <textarea name="message" rows="4" required></textarea></label>
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+        <button type="submit">Send Inquiry</button>
+      </form>
+    </div>
 
     <script>
       const tabs = document.querySelectorAll('.collection-tab');
@@ -101,7 +80,7 @@
           .then(res => res.json())
           .then(data => {
             gallery.innerHTML = '';
-            description.textContent = data.description || ''; // FILL
+            description.textContent = data.description || '';
             (data.artworks || data).forEach(art => {
               const div = document.createElement('div');
               div.className = 'art-piece';
@@ -138,14 +117,13 @@
         }
       }
 
-      function openInquiry(event) {
+      function toggleForm(event) {
         event.stopPropagation();
         form.style.display = 'flex';
         formArtTitle.value = currentArtTitle;
       }
 
       function submitForm(event) {
-        
         alert("Your inquiry has been submitted!");
       }
 
@@ -181,5 +159,120 @@
   </div>
 
   <script src="script.js"></script>
+
+<!-- testing one-pager. Remove later -->
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .collections-section {
+      padding: 1rem 1.5rem 0;
+    }
+
+    .collections-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .collections-bar {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      background-color: #222;
+      padding: 0.5rem 1rem;
+      scrollbar-width: none;
+    }
+
+    .collections-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .collection-tab {
+      display: inline-block;
+      color: #bbb;
+      border: 1px solid #444;
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      margin-right: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .collection-tab.active {
+      background-color: #555;
+      color: #fff;
+      border-color: #fff;
+    }
+
+    .collection-tab:hover {
+      background-color: #333;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem 1rem;
+    }
+
+    .art-piece img {
+      height: 200px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid #444;
+      transition: transform 0.3s ease;
+    }
+
+    .art-piece img:hover {
+      transform: scale(1.05);
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 0.5rem;
+      color: #bbb;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    #modal {
+      position: fixed;
+      display: none;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    #modal img {
+      max-width: 90%;
+      max-height: 70%;
+      margin-bottom: 1rem;
+      border: 3px solid white;
+    }
+
+    .inquiry-button {
+      padding: 0.5rem 1rem;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .inquiry-button:hover {
+      background-color: #666;
+    }
+  </style>
+
 </body>
 </html>
