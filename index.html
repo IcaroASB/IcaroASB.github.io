@@ -58,11 +58,9 @@
     </div>
     <div id="modal-content">
       <button id="modal-close" onclick="closeModal(event)">×</button>
-      <img id="modal-img" src="" alt="Zoomed Art" />
-        <div class="modal-overlay-caption" id="modal-caption">
-          <div id="modal-title"></div>
-          <div id="modal-status"></div>
-        </div>
+      <div class="modal-image-wrapper">
+        <img id="modal-img" src="" alt="Zoomed Art" />
+      </div>
       <div class="modal-form-container">
         <h3 class="form-title">Inquire About This Piece</h3>
         <!-- Using my email, replace with yvon. Can also make it a string to keep email hidden -->
@@ -217,8 +215,40 @@
       background-color: #111;
       color: #eee;
       font-family: 'Helvetica Neue', sans-serif;
+      font-size: 1.3rem;
       margin: 0;
       padding: 0;
+    }
+
+    /* FONTS */
+
+    /* Titles */
+    h1, h2, h3, .hero-text h1, .form-title {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Body text */
+    body, p, label, input, textarea, /*button,*/ .collection-description, .caption {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    h1 {
+      font-size: 2.7rem; /* up from 2.5 */
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    label,
+    input,
+    textarea,
+    button {
+      font-size: 1rem; /* up from 0.9 or 0.95 */
     }
 
     .collections-section {
@@ -228,12 +258,7 @@
     .collections-section h2 {
       font-size: 1.5rem;
       margin-bottom: 0.5rem;
-    }
-
-    .collections-section h2,
-    #about h2,
-    #contact h2 {
-      padding-left: 1.5rem; /* or use margin-left: 1.5rem; */
+      padding-left: 1.5rem;
     }
 
     .collections-bar {
@@ -428,26 +453,37 @@
       background-color: #666;
     }
 
+    .modal-image-wrapper {
+      position: relative;
+      display: inline-block;
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    .modal-image-wrapper img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 3px solid white;
+    }
+
     .modal-overlay-text {
       position: absolute;
       top: 1rem;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 11;
       text-align: center;
       color: white;
-      font-family: 'Playfair Display', serif;
+      z-index: 2;
       pointer-events: none;
     }
 
     #modal-art-title {
-      font-size: 1.5rem;
       font-weight: bold;
       margin-bottom: 0.25rem;
     }
 
     #modal-art-status {
-      font-size: 1rem;
       font-style: italic;
       opacity: 0.85;
     }
@@ -532,17 +568,7 @@
       font-size: 1.1rem;
     }
 
-    /* FONTS */
 
-    /* Titles */
-    h1, h2, h3, .hero-text h1, .form-title {
-      font-family: 'Playfair Display', serif;
-    }
-
-    /* Body text */
-    body, p, label, input, textarea, /*button,*/ .collection-description, .caption {
-      font-family: 'Cormorant Garamond', serif;
-    }
 
     .right-padded {
       padding-left: 1.5rem;
