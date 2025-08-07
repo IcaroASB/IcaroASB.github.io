@@ -43,21 +43,26 @@
     <p class="collection-description" id="collection-description"></p> 
   </section>
 
-  <!-- ✅ FIX: changed class here to apply gallery styles directly -->
+  
   <section id="gallery" class="gallery"></section>
 
+
   <div id="modal" onclick="closeModal(event)">
-    <img id="modal-img" src="" alt="Zoomed Art" />
-    <button class="inquiry-button" onclick="toggleForm(event)">Inquire About This Piece</button>
-    <form id="inquiry-form" action="https://formsubmit.co/icaroabacelar@gmail.com" method="POST" onsubmit="submitForm(event)" style="display: none;">
-      <input type="hidden" name="artTitle" id="form-art-title" />
-      <label>Your Name: <input type="text" name="name" required /></label>
-      <label>Your Email: <input type="email" name="email" required /></label>
-      <label>Message: <textarea name="message" rows="4" required></textarea></label>
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
-      <button type="submit">Send Inquiry</button>
-    </form>
+    <div id="modal-content">
+      <img id="modal-img" src="" alt="Zoomed Art" />
+      <div class="modal-form-container">
+        <button class="inquiry-button" onclick="toggleForm(event)">Inquire About This Piece</button>
+        <!-- Using my email, replace with yvon. Can also make it a string to keep email hidden -->
+        <form id="inquiry-form" action="https://formsubmit.co/icaroabacelar@gmail.com" method="POST" onsubmit="submitForm(event)" style="display: none;">
+          <input type="hidden" name="artTitle" id="form-art-title" />
+          <label>Your Name: <input type="text" name="name" required /></label>
+          <label>Your Email: <input type="email" name="email" required /></label>
+          <label>Message: <textarea name="message" rows="4" required></textarea></label>
+          <input type="hidden" name="_captcha" value="false" />
+          <button type="submit">Send Inquiry</button>
+        </form>
+      </div>
+    </div>
   </div>
 
   <!-- Previous Interation: Images on HTML
@@ -264,6 +269,73 @@
 
     .inquiry-button:hover {
       background-color: #666;
+    }
+ 
+    #modal-content {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 2rem;
+      max-width: 90%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    #modal-content img {
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+    }
+
+    .modal-form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 300px;
+      color: white;
+    }
+
+    .modal-form-container label {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.9rem;
+    }
+
+    .modal-form-container input,
+    .modal-form-container textarea {
+      margin-top: 0.3rem;
+      padding: 0.4rem;
+      background: #222;
+      border: 1px solid #555;
+      color: white;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    .modal-form-container button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .modal-form-container button:hover {
+      background-color: #666;
+    }
+
+    @media (max-width: 768px) {
+      #modal-content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .modal-form-container {
+        width: 90%;
+      }
     }
   </style>
 

@@ -38,8 +38,7 @@ function toggleForm(event) {
 }
 
 function submitForm(event) {
-  // Optional: hide modal after submission
-  setTimeout(() => {
-    modal.style.display = 'none';
-  }, 300);
+  event.preventDefault();
+  alert("Your inquiry has been submitted! Thank you!");
+  modal.style.display = 'none';
 }
