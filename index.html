@@ -53,7 +53,13 @@
       <div class="modal-form-container">
         <h3 class="form-title">Inquire About This Piece</h3>
         <!-- Using my email, replace with yvon. Can also make it a string to keep email hidden -->
-        <form id="inquiry-form" action="https://formsubmit.co/icaroabacelar@gmail.com" method="POST" onsubmit="submitForm(event)">
+        <form 
+          id="inquiry-form" 
+          action="https://formsubmit.co/icaroabacelar@gmail.com" 
+          method="POST" 
+          target="hidden_iframe"
+          onsubmit="handleSubmit(event)"
+        >
           <input type="hidden" name="artTitle" id="form-art-title" />
           <label>Your Name: <input type="text" name="name" required /></label>
           <label>Your Email: <input type="email" name="email" required /></label>
@@ -64,6 +70,11 @@
       </div>
     </div>
   </div>
+
+  <!-- For the i-frame. Avoid redirection -->
+  <iframe name="hidden_iframe" style="display:none;"></iframe>
+  <!-- For the toast -->
+  <div id="toast" class="toast">Thank you! Your message has been sent.</div>
 
   <!-- Previous Interation: Images on HTML
   <section class="gallery">
@@ -145,9 +156,27 @@
       }
     }
 
-    function submitForm(event) {
-      alert("Your inquiry has been submitted!");
+    function handleSubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+
+      setTimeout(() => {
+        form.submit();                     // submit to hidden iframe
+        modal.style.display = 'none';      // close zoom modal
+        form.reset();                      // reset the form fields
+        showToast();                       // show toast message
+      }, 100);
     }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000); // Show for 3 seconds
+    }
+
 
     loadCollection('portraits');
   </script>
@@ -326,6 +355,29 @@
       color: white;
       font-size: 1.2rem;
       text-align: center;
+    }
+
+    .toast {
+      visibility: hidden;
+      min-width: 250px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 1rem;
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      font-size: 1rem;
+      opacity: 0;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
     }
 
     @media (max-width: 768px) {
