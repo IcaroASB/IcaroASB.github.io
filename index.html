@@ -29,7 +29,7 @@
   </nav>
 
   <header class="hero-header">
-    <img src="images/art1.jpg" alt="Header background" class="hero-bg" />
+    <img src="images/trike.jpg" alt="Header background" class="hero-bg" />
     <div class="hero-text">
       <h1>Yvon Lu</h1>
       <p>Charcoal & Graphite Artist</p>
@@ -214,42 +214,12 @@
     body {
       background-color: #111;
       color: #eee;
-      font-family: 'Helvetica Neue', sans-serif;
+      font-family: 'Cormorant Garamond', serif;   /* ← was Helvetica */
       font-size: 1.3rem;
       margin: 0;
       padding: 0;
     }
-
-    /* FONTS */
-
-    /* Body text */
-    body, p, label, input, textarea, /*button,*/ .collection-description, .caption {
-      font-family: 'Cormorant Garamond', serif;
-    }
-      /* Titles */
-    h1 {
-      font-size: 2.7rem; /* up from 2.5 */
-    }
-
-    h2 {
-      font-size: 2rem;
-    }
-
-    h3 {
-      font-size: 1.5rem;
-    }
-
-    h1, h2, h3, .hero-text h1, .form-title {
-      font-family: 'Playfair Display', serif;
-    }
-
-    label,
-    input,
-    textarea,
-    button {
-      font-size: 1rem; /* up from 0.9 or 0.95 */
-      font-family: 'Helvetica Neue', sans-serif;
-    }
+        
 
     .collections-section {
       padding: 0rem 0rem 0;
@@ -263,6 +233,7 @@
 
     .collections-bar {
       height: 2.8rem;
+      justify-content: center;
       display: flex;
       overflow-x: auto;
       white-space: nowrap;
@@ -405,6 +376,7 @@
       max-width: 90%;
       flex-wrap: wrap;
       justify-content: center;
+      position: relative;
     }
 
     #modal-content img {
@@ -459,9 +431,9 @@
 
     .modal-overlay-text {
       position: absolute;
-      top: 2rem;
+      top: -2rem;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       text-align: center;
       pointer-events: none;
     }
@@ -589,6 +561,11 @@
         align-items: center;
       }
 
+      .modal-form-container {
+        width: 90%;
+      }
+    }
+
     @keyframes shake {
       0%   { transform: translate( 0px,  0px) rotate(0deg); }
       10%  { transform: translate(-2px, -1px) rotate(-1deg); }
@@ -603,9 +580,44 @@
       100% { transform: translate( 0px,  0px) rotate(0deg); }
     }
 
-      .modal-form-container {
-        width: 90%;
-      }
+    /* FONTS */
+
+    /* Body text */
+    body, p, label, input, textarea, /*button,*/ .collection-description, .caption {
+      font-family: 'Cormorant Garamond', serif;
+    }
+      /* Titles */
+    body h1 {
+      font-size: 2.7rem; /* up from 2.5 */
+    }
+
+    body h2 {
+      font-size: 2rem;
+    }
+
+    body h3 {
+      font-size: 1.5rem;
+    }
+
+    body h1,
+    body h2,
+    body h3,
+    .hero-text h1,
+    .form-title {
+      font-family: 'Playfair Display', serif;
+    }
+
+    label,
+    input,
+    textarea,
+    button {
+      font-size: 1rem; /* up from 0.9 or 0.95 */
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    /* LAZY FIX */
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif !important;
     }
   </style>
 
