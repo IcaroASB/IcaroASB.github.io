@@ -25,9 +25,12 @@
     </ul>
   </nav>
 
-  <header>
-    <h1>Yvon Lu</h1>
-    <p>Charcoal & Graphite Artist</p>
+  <header class="hero-header">
+    <img src="images/art1.jpg" alt="Header background" class="hero-bg" />
+    <div class="hero-text">
+      <h1>Yvon Lu</h1>
+      <p>Charcoal & Graphite Artist</p>
+    </div>
   </header>
 
    <!-- testing one-pager. Remove later -->
@@ -235,7 +238,7 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 1.5rem;
+      width: 1rem;
       z-index: 1;
       pointer-events: none;
     }
@@ -429,16 +432,60 @@
 
     #modal-close {
       position: absolute;
-      top: 10px;
+      top: 15px;
       right: 10px;
-      font-size: 1.8rem;
+      font-size: 2rem;
       color: white;
       background: transparent;
       border: none;
       cursor: pointer;
-      z-index: 20;
-      padding: 0;
-      line-height: 1;
+      z-index: 11;
+    }
+
+    .hero-header {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      aspect-ratio: 4 / 3; /* adjust as needed, or use height for stricter control */
+    }
+
+    .hero-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* keeps aspect ratio and fills */
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      padding: 2rem 1rem;
+      font-size: 1.2rem;
+      background: rgba(0, 0, 0, 0.4); /* optional soft overlay */
+    }
+
+    .hero-text h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    .hero-text p {
+      margin: 0.5rem 0 0;
+      font-size: 1.1rem;
+    }
+
+
+    /* Slightly shift X inward only on larger screens */
+    @media (min-width: 768px) {
+      #modal-close {
+        top: 15px;
+        right: 10%;
+      }
     }
 
     #modal-close:hover {
