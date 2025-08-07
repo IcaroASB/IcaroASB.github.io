@@ -139,20 +139,51 @@
       <div class="collection-tab" data-collection="abstracts">Abstracts</div>
       <div class="collection-tab" data-collection="ink">Ink Work</div>
     </div>
+    <p class="collection-description" id="collection-description"></p> 
   </section>
 
   <section class="gallery" id="gallery"></section>
 
-  <div id="modal" onclick="closeModal(event)">
-    <img id="modal-img" src="" alt="Zoomed Art" />
-    <button class="inquiry-button" onclick="openInquiry(event)">Inquire About This Piece</button>
-  </div>
+<div id="modal" onclick="closeModal(event)">
+  <img id="modal-img" src="" alt="Zoomed Art" />
+  <button class="inquiry-button" onclick="toggleForm(event)">Inquire About This Piece</button>
+  <!-- testing w/ my email. Change later -->
+  <form id="inquiry-form" action="https://formsubmit.co/icaroabacelar@gmail.com" method="POST" onsubmit="submitForm(event)" style="display: none;">
+    <input type="hidden" name="artTitle" id="form-art-title" />
+    
+    <label>
+      Your Name:
+      <input type="text" name="name" required />
+    </label>
+    
+    <label>
+      Your Email:
+      <input type="email" name="email" required />
+    </label>
+    
+    <label>
+      Message:
+      <textarea name="message" rows="4" required></textarea>
+    </label>
+    
+    <!-- Optional: Disable CAPTCHA. Don't think it will be spammed and captcha is annoying -->
+    <input type="hidden" name="_captcha" value="false">
+
+    <!-- Optional: Redirect after submission. Check if you like -->
+    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+
+    <button type="submit">Send Inquiry</button>
+  </form>
+</div>
 
   <script>
     const tabs = document.querySelectorAll('.collection-tab');
     const gallery = document.getElementById('gallery');
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modal-img');
+    const form = document.getElementById('inquiry-form');
+    const formArtTitle = document.getElementById('form-art-title');
+    const description = document.getElementById('collection-description');
     let currentArtTitle = '';
 
     function setActiveTab(selectedTab) {
@@ -165,7 +196,8 @@
         .then(res => res.json())
         .then(data => {
           gallery.innerHTML = '';
-          data.forEach(art => {
+          description.textContent = data.description || ''; // FILL
+          (data.artworks || data).forEach(art => {
             const div = document.createElement('div');
             div.className = 'art-piece';
             div.innerHTML = `
@@ -192,6 +224,7 @@
       currentArtTitle = title;
       modal.style.display = 'flex';
       modalImg.src = `images/${filename}`;
+      form.style.display = 'none'; 
     }
 
     function closeModal(event) {
@@ -202,8 +235,13 @@
 
     function openInquiry(event) {
       event.stopPropagation();
-      const mailto = `mailto:your.email@example.com?subject=Inquiry about "${currentArtTitle}"`;
-      window.location.href = mailto;
+      form.style.display = 'flex';
+      formArtTitle.value = currentArtTitle;
+    }
+
+    function submitForm(event) {
+      
+      alert("Your inquiry has been submitted!");
     }
 
     loadCollection('portraits');

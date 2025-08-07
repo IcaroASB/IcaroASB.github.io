@@ -1,12 +1,15 @@
-[
-  {
-    "title": "Stillness",
-    "status": "Sold",
-    "filename": "art1.jpg"
-  },
-  {
-    "title": "Histogram",
-    "status": "Available",
-    "filename": "art3.jpg"
-  }
-]
+{
+  "description": "A series of intimate charcoal portraits capturing quiet emotions and subtle expressions.",
+  "artworks": [
+    {
+      "title": "Stillness",
+      "status": "Sold",
+      "filename": "art1.jpg"
+    },
+    {
+      "title": "Histogram",
+      "status": "Available",
+      "filename": "art3.jpg"
+    }
+  ]
+}
