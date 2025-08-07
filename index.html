@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/png" href="images/temp_icon.png" />
   <link rel="apple-touch-icon" href="images/temp_icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <nav>
@@ -54,6 +55,10 @@
     <div id="modal-content">
       <button id="modal-close" onclick="closeModal(event)">×</button>
       <img id="modal-img" src="" alt="Zoomed Art" />
+        <div class="modal-overlay-caption" id="modal-caption">
+          <div id="modal-title"></div>
+          <div id="modal-status"></div>
+        </div>
       <div class="modal-form-container">
         <h3 class="form-title">Inquire About This Piece</h3>
         <!-- Using my email, replace with yvon. Can also make it a string to keep email hidden -->
@@ -152,6 +157,10 @@
       modal.style.display = 'flex';
       modalImg.src = `images/${filename}`;
       formArtTitle.value = currentArtTitle;
+
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-status').textContent = status;
+      document.getElementById('modal-caption').style.display = 'block';
     }
 
     function closeModal(event) {
@@ -415,6 +424,30 @@
       background-color: #666;
     }
 
+    .modal-overlay-caption {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+      font-size: 1.2rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      z-index: 11;
+    }
+
+    #modal-title {
+      font-weight: bold;
+      margin-bottom: 0.2rem;
+    }
+
+    #modal-status {
+      font-style: italic;
+      font-size: 1rem;
+    }
+
     .form-title {
       margin: 0.5rem 0;
       color: white;
@@ -492,6 +525,18 @@
     .hero-text p {
       margin: 0.5rem 0 0;
       font-size: 1.1rem;
+    }
+
+    /* FONTS */
+
+    /* Titles */
+    h1, h2, h3, .hero-text h1, .form-title {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Body text */
+    body, p, label, input, textarea, /*button,*/ .collection-description, .caption {
+      font-family: 'Cormorant Garamond', serif;
     }
 
 
