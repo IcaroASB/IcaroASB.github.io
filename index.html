@@ -74,19 +74,29 @@
   <!-- Image Zoom-In -->
   <div id="modal" onclick="closeModal(event)">
     <div id="modal-content">
-      <button id="modal-close">×</button>
+      <!-- close button (already had onclick) -->
+      <button id="modal-close" onclick="closeModal(event)">×</button>
 
       <div class="modal-image-wrapper">
-        <button id="modal-prev" class="modal-nav">‹</button>
+        <!-- prev arrow, now wired up -->
+        <button id="modal-prev" class="modal-nav" onclick="modalPrev()">‹</button>
+        <!-- the image -->
         <img id="modal-img" src="" alt="Zoomed Art" />
-        <button id="modal-next" class="modal-nav">›</button>
-        <div class="modal-overlay-text">…</div>
+        <!-- next arrow, now wired up -->
+        <button id="modal-next" class="modal-nav" onclick="modalNext()">›</button>
+
+        <!-- overlay title + status -->
+        <div class="modal-overlay-text">
+          <div id="modal-art-title"></div>
+          <div id="modal-art-status"></div>
+        </div>
+
+        <!-- your “size · material” caption -->
         <div id="modal-art-details" class="modal-details"></div>
       </div>
 
       <div class="modal-form-container">
         <h3 class="form-title">Inquire About This Piece</h3>
-        <!-- Using my email, replace with yvon. Can also make it a string to keep email hidden -->
         <form 
           id="inquiry-form" 
           action="https://formsubmit.co/icaroabacelar@gmail.com" 
