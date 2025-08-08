@@ -105,7 +105,7 @@ nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
 /* images fill the card width and keep a consistent height */
 .art-piece img{
   width:100%;
-  height: 300px;              /* tune as you like: 220–300px both look good */
+  height: 400px;              /* tune as you like: 220–300px both look good */
   object-fit: cover;          /* crop to fill while keeping composition tight */
   cursor:pointer;
   border:2px solid #444;
