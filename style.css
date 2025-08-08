@@ -98,14 +98,14 @@ nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
 }
 
 .art-piece {
-  flex: 0 1 300px;    /* never shrink smaller than 300px */
+  flex: 0 1 400px;    /* never shrink smaller than 300px */
   width: 400px;
 }
 
 /* images fill the card width and keep a consistent height */
 .art-piece img{
   width:100%;
-  height: 400px;              /* tune as you like: 220–300px both look good */
+  height: 300px;              /* tune as you like: 220–300px both look good */
   object-fit: cover;          /* crop to fill while keeping composition tight */
   cursor:pointer;
   border:2px solid #444;
@@ -279,6 +279,29 @@ body h1, body h2, body h3, .hero-text h1, .form-title{ font-family:'Playfair Dis
   .modal-form-container{ width:92vw; max-width:92vw; flex:0 0 auto; }
   .modal-image-wrapper .modal-nav{
     width:3rem; height:3rem; font-size:2.2rem;   /* larger hit target on phones */
+  }
+}
+
+/* ===== Scroll Animation ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+  will-change: opacity, transform;
+}
+
+/* When revealed */
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optional: turn off motion for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 
