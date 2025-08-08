@@ -19,42 +19,77 @@
           gallery.innerHTML = '';
           description.textContent = data.description || '';
 
-          data.artworks.forEach(art => {
-            const div = document.createElement('div');
-            div.className = 'art-piece';
+          (data.artworks || data).forEach(art => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'art-piece';
 
-            // 1) build the slides
-            const slides = art.filenames.map((fn, idx) => `
-              <img
-                src="images/${fn}"
-                class="carousel-img${idx === 0 ? ' active' : ''}"
-                data-index="${idx}"
-                onclick='openModal(
-                  event,
-                  ${JSON.stringify(art.filenames)},
-                  ${JSON.stringify(art.title)},
-                  ${JSON.stringify(art.status)},
-                  ${JSON.stringify(art.details)},
-                  ${idx}
-                )'
-              />
-            `).join('');
+            // carousel container
+            const carousel = document.createElement('div');
+            carousel.className = 'carousel';
 
-            // 2) inject carousel + caption + details
-            div.innerHTML = `
-              <div class="carousel">
-                <button class="carousel-prev" onclick="prevSlide(this)">‹</button>
-                ${slides}
-                <button class="carousel-next" onclick="nextSlide(this)">›</button>
-              </div>
-              <p class="caption">"${art.title}" — ${art.status}</p>
-              <p class="details">${art.details}</p>
-            `;
+            // prev/next buttons (page carousel)
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'carousel-prev';
+            prevBtn.innerHTML = '&#10094;';
+            prevBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const imgs = carousel.querySelectorAll('.carousel-img');
+              const active = carousel.querySelector('.carousel-img.active');
+              let idx = +active.dataset.index;
+              active.classList.remove('active');
+              idx = (idx - 1 + imgs.length) % imgs.length;
+              imgs[idx].classList.add('active');
+            });
 
-            gallery.appendChild(div);
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'carousel-next';
+            nextBtn.innerHTML = '&#10095;';
+            nextBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const imgs = carousel.querySelectorAll('.carousel-img');
+              const active = carousel.querySelector('.carousel-img.active');
+              let idx = +active.dataset.index;
+              active.classList.remove('active');
+              idx = (idx + 1) % imgs.length;
+              imgs[idx].classList.add('active');
+            });
+
+            carousel.appendChild(prevBtn);
+
+            // slides
+            (art.filenames || []).forEach((fn, idx) => {
+              const img = document.createElement('img');
+              img.src = `images/${fn}`;
+              img.className = 'carousel-img' + (idx === 0 ? ' active' : '');
+              img.dataset.index = idx;
+
+              // open modal on click — no inline JS, so apostrophes are safe
+              img.addEventListener('click', (ev) => {
+                openModal(ev, art.filenames, art.title, art.status, idx, art.details);
+              });
+
+              carousel.appendChild(img);
+            });
+
+            carousel.appendChild(nextBtn);
+
+            // caption & details
+            const cap = document.createElement('p');
+            cap.className = 'caption';
+            cap.textContent = `"${art.title}" — ${art.status}`;
+
+            const det = document.createElement('p');
+            det.className = 'details';
+            det.textContent = art.details || '';
+
+            wrapper.appendChild(carousel);
+            wrapper.appendChild(cap);
+            wrapper.appendChild(det);
+
+            gallery.appendChild(wrapper);
           });
         })
-        .catch(err => {
+        .catch(() => {
           gallery.innerHTML = '<p style="color: red;">Error loading collection.</p>';
         });
     }
@@ -90,19 +125,19 @@
       });
     });
 
-    function openModal(event, filenames, title, status, details, startIdx = 0) {
+    function openModal(event, filenames, title, status, startIndex = 0, details = '') {
       event.stopPropagation();
       modal.style.display = 'flex';
 
-      // store the set and start at the passed index
       modal.currentSet = filenames;
-      modal.currentIdx = startIdx;
+      modal.currentIdx = startIndex;
 
-      // show the starting image
-      modalImg.src = `images/${filenames[startIdx]}`;
-      document.getElementById("modal-art-title").textContent  = title;
-      document.getElementById("modal-art-status").textContent = status;
-      document.getElementById("modal-art-details").textContent = details;
+      modalImg.src = `images/${filenames[startIndex]}`;
+      formArtTitle.value = title;
+
+      document.getElementById('modal-art-title').textContent = title || '';
+      document.getElementById('modal-art-status').textContent = status || '';
+      document.getElementById('modal-art-details').textContent = details || '';
     }
 
 
