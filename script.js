@@ -18,34 +18,33 @@
         .then(data => {
           gallery.innerHTML = '';
           description.textContent = data.description || '';
-          (data.artworks || data).forEach(art => {
+          data.artworks.forEach(art => {
             const div = document.createElement('div');
             div.className = 'art-piece';
 
-            // build carousel slides, each opens the modal at its own index
+            // build the slides
             const slides = art.filenames.map((fn, idx) => `
-              <img
-                src="images/${fn}"
-                class="carousel-img${idx === 0 ? ' active' : ''}"
+              <img 
+                src="images/${fn}" 
+                class="carousel-img${idx===0?' active':''}" 
                 data-index="${idx}"
                 onclick='openModal(
                   event,
                   ${JSON.stringify(art.filenames)},
-                  "${art.title}",
-                  "${art.status}",
+                  ${JSON.stringify(art.title)},
+                  ${JSON.stringify(art.status)},
+                  ${JSON.stringify(art.details)},
                   ${idx}
                 )'
               />
             `).join('');
 
             div.innerHTML = `
-              <img src="images/${art.filename}" … onclick="openModal(
-                event,
-                '${art.filename}',
-                '${art.title}',
-                '${art.status}',
-                \`${art.details}\`
-              )" />
+              <div class="carousel">
+                <button class="carousel-prev" onclick="prevSlide(this)">‹</button>
+                ${slides}
+                <button class="carousel-next" onclick="nextSlide(this)">›</button>
+              </div>
               <p class="caption">"${art.title}" — ${art.status}</p>
               <p class="details">${art.details}</p>
             `;
@@ -57,6 +56,7 @@
           gallery.innerHTML = '<p style="color: red;">Error loading collection.</p>';
         });
     }
+
 
 
     function nextSlide(btn) {
@@ -87,22 +87,21 @@
       });
     });
 
-    function openModal(event, filename, title, status, details) {
+    function openModal(event, filenames, title, status, details, startIdx = 0) {
       event.stopPropagation();
       modal.style.display = 'flex';
 
-      // store the set and start at index 0
+      // store the set and start at the passed index
       modal.currentSet = filenames;
-      modal.currentIdx = 0;
+      modal.currentIdx = startIdx;
 
-      // show the first image
-      modalImg.src = `images/${filenames[0]}`;
-      formArtTitle.value = title;
-
-      document.getElementById("modal-art-title").textContent = title || "";
-      document.getElementById("modal-art-status"). textContent = status || "";
-      document.getElementById("modal-art-details").textContent = details || '';
+      // show the starting image
+      modalImg.src = `images/${filenames[startIdx]}`;
+      document.getElementById("modal-art-title").textContent  = title;
+      document.getElementById("modal-art-status").textContent = status;
+      document.getElementById("modal-art-details").textContent = details;
     }
+
 
     function modalNext() {
       const set = modal.currentSet;
