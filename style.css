@@ -79,7 +79,7 @@
       position: relative;
       width: 100%;
       overflow: hidden;
-      aspect-ratio: 4 / 3;       /* <-- this restores the old behavior */
+      aspect-ratio: 21 / 9;       /* <-- this restores the old behavior */
       /* or: min-height: clamp(240px, 35vh, 520px); */
     }
 
