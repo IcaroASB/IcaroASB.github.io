@@ -21,9 +21,8 @@
     .hero-header {
       position: relative;
       width: 100%;
-      /* no fixed aspect here, we want the image's natural height */
-      overflow: hidden; /* optional; keeps the overlay from spilling */
-      height: auto;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;  /* same as before */
     }
 
     nav {
@@ -91,14 +90,13 @@
 
     /* THE BANNER IMAGE — fill width, keep full height (no crop) */
     .hero-bg {
-      position: static;          /* was absolute */
-      display: block;
+      position: absolute;
+      inset: 0;
       width: 100%;
-      height: auto;              /* key: keeps full image height */
-      object-fit: contain;       /* harmless here; height:auto does the work */
+      height: 100%;
+      object-fit: cover;     /* back to cover */
       z-index: 1;
       animation: shake 30s linear infinite;
-      background-color: black;   /* fills any side bars if aspect ratios differ */
     }
 
     .hero-text h1 {
@@ -533,38 +531,32 @@
 
 
     /* ===== Modal Navigation Arrows ===== */
-    .modal-image-wrapper .modal-nav {
+    .modal-image-wrapper .modal-nav{
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0,0,0,.55);
       border: none;
-      color: white;
-      font-size: 2rem;
+      color: #fff;
       width: 2.5rem;
       height: 2.5rem;
-      line-height: 2.5rem;
-      text-align: center;
       border-radius: 50%;
       cursor: pointer;
       z-index: 12;
-      margin-top: 0.5rem;
-      font-style: normal;
-      opacity: 0.85;
-      font-size: 1rem;
-      font-family: 'Cormorant Garamond', serif;
+
+      /* make the chevron big & centered */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;        /* <-- keep ONLY this one */
+      line-height: 1;         /* no weird vertical offset */
     }
 
-    .modal-image-wrapper #modal-prev {
-      left: 0.5rem; /* inside the left edge of the image */
-    }
+    .modal-image-wrapper #modal-prev { left: .5rem; }
+    .modal-image-wrapper #modal-next { right: .5rem; }
 
-    .modal-image-wrapper #modal-next {
-      right: 0.5rem; /* inside the right edge of the image */
-    }
-
-    .modal-nav:hover {
-      background: rgba(0, 0, 0, 0.8);
+    .modal-image-wrapper .modal-nav:hover {
+      background: rgba(0,0,0,.85);
     }
 
     /* FONTS */
