@@ -22,12 +22,19 @@
             const div = document.createElement('div');
             div.className = 'art-piece';
 
-            // build carousel slides
+            // build carousel slides, each opens the modal at its own index
             const slides = art.filenames.map((fn, idx) => `
-              <img 
-                src="images/${fn}" 
-                class="carousel-img${idx===0?' active':''}" 
-                data-index="${idx}" 
+              <img
+                src="images/${fn}"
+                class="carousel-img${idx === 0 ? ' active' : ''}"
+                data-index="${idx}"
+                onclick='openModal(
+                  event,
+                  ${JSON.stringify(art.filenames)},
+                  "${art.title}",
+                  "${art.status}",
+                  ${idx}
+                )'
               />
             `).join('');
 
@@ -47,6 +54,7 @@
           gallery.innerHTML = '<p style="color: red;">Error loading collection.</p>';
         });
     }
+
 
     function nextSlide(btn) {
       const carousel = btn.parentNode;

@@ -5,12 +5,12 @@
     {
       "title": "Stillness",
       "status": "Sold",
-      "filename": "art1.jpg"
+      "filenames": ["art1.jpg","alt3.jpg","art2.jpg"]
     },
     {
       "title": "Histogram",
       "status": "Available",
-      "filename": "art3.jpg"
+      "filenames": ["art3.jpg","art2.jpg"]
     }
   ]
 }
