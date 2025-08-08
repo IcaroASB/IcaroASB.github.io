@@ -4,31 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Art Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+  <!-- <link rel="stylesheet" href="style.css" /> Not in use. Use if multiple page format -->
+   <!-- Icon -->
   <link rel="icon" type="image/png" href="images/temp_icon.png" />
   <link rel="apple-touch-icon" href="images/temp_icon.png">
+
+  <!-- Link for fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <nav>
     <ul>
       <a href="#about">About</a>
-      <li><a href="gallery.html">Gallery</a></li>
-      <a href="#gallery">Gallery (Preview)</a>
+
+      <!-- Sekelleton for second page on nav bar
+      <li><a href="gallery.html">Gallery</a></li>-->
+
+      <a href="#gallery">Gallery</a>
+
+      <!-- Placeholder for Yvon to see if she likes dropd}
       <li class="dropdown">
 
-        <!-- Placeholder for Yvon to see if she likes dropd} -->
+         
         <a href="#">Collections ▾</a> 
         <ul class="dropdown-content">
           <li><a href="#">Sketches</a></li>
           <li><a href="#">Portraits</a></li>
           <li><a href="#">Landscapes</a></li>
         </ul>
-      </li>
+      </li> -->
     </ul>
   </nav>
 
+
+  <!-- Banner with Name and Image -->
   <header class="hero-header">
+    
     <img src="images/trike.jpg" alt="Header background" class="hero-bg" />
     <div class="hero-text">
       <h1>Yvon Lu</h1>
@@ -36,8 +47,10 @@
     </div>
   </header>
 
-   <!-- testing one-pager. Remove later -->
+   <!-- Gallery on one-pager -->
   <section id="gallery" class="collections-section">
+
+    <!-- List of Collections. Added via JSON -->
     <h2>Collections</h2>
     <div class="collections-bar" id="collections-bar">
       <div class="collection-tab active" data-collection="portraits">Portraits</div>
@@ -50,7 +63,7 @@
     <div class="gallery" id="gallery-images"></div>
   </section>
 
-
+  <!-- Image Zoom-In -->
   <div id="modal" onclick="closeModal(event)">
     <div id="modal-content">
       <button id="modal-close" onclick="closeModal(event)">×</button>
@@ -87,7 +100,7 @@
   <!-- For the toast -->
   <div id="toast" class="toast">Thank you! Your inquiry has been received.</div>
 
-  <!-- Previous Interation: Images on HTML
+  <!-- Previous Interation: Images on HTML instead of JSON. Delete if don't want
   <section class="gallery">
     <div class="art-piece" onclick="openModal(this)">
       <img src="images/art1.jpg" alt="Art 1" />
@@ -110,6 +123,7 @@
     <a href="mailto:your.email@example.com">your.email@example.com</a>
   </section>
 
+  <!-- JS -->
   <script>
     const tabs = document.querySelectorAll('.collection-tab');
     const gallery = document.getElementById('gallery-images');
@@ -202,19 +216,19 @@
 
       setTimeout(() => {
         toast.classList.remove('show');
-      }, 4000); // Show for 3 seconds
+      }, 4000); // Show for 4 secs
     }
 
 
     loadCollection('portraits');
   </script>
 
-<!-- testing one-pager. Remove later -->
+<!-- CSS -->
   <style>
     body {
       background-color: #111;
       color: #eee;
-      font-family: 'Cormorant Garamond', serif;   /* ← was Helvetica */
+      font-family: 'Cormorant Garamond', serif;
       font-size: 1.3rem;
       margin: 0;
       padding: 0;
@@ -240,7 +254,7 @@
       background-color: #222;
       scrollbar-width: none;
       position: relative;
-      padding: 0; /* ensure no vertical padding */
+      padding: 0; 
     }
 
     .collections-bar::-webkit-scrollbar {
@@ -283,7 +297,7 @@
       flex-shrink: 0;
       height: 100%;
       box-sizing: border-box;
-      padding: 0 1.2rem; /* remove vertical padding */
+      padding: 0 1.2rem; 
     }
 
     .collection-tab:first-child {
@@ -488,8 +502,8 @@
 
     #modal-close {
       position: absolute;
-      top: -25px;
-      right: -10px;
+      top: -2.5rem;
+      right: -0.8rem;
       font-size: 2rem;
       color: white;
       background: transparent;
@@ -501,7 +515,7 @@
     /* Slightly shift X inward only on larger screens */
     @media (min-width: 768px) {
       #modal-close {
-        top: -35px;
+        top: -3.75rem;
         right: -10%;
       }
     }
@@ -526,7 +540,7 @@
       top: 0;
       left: 0;
       z-index: 1;
-      animation: shake 9s linear infinite;
+      animation: shake 30s linear infinite;
       /*transform-origin: center center;*/
     }
 
@@ -569,6 +583,50 @@
       }
     }
 
+    /* Animation. More erractic, higher amplitude. Make slower (some 30s)*/
+
+        @keyframes shake {
+      0%, 100% {
+        transform: translate(2px, 3px) rotate(0deg);
+      }
+      8% {
+        transform: translate(0px, -1px) rotate(0deg);
+      }
+      16% {
+        transform: translate(3px, 2px) rotate(-0.16deg);
+      }
+      24% {
+        transform: translate(-2px, -1px) rotate(-0.34deg);
+      }
+      32% {
+        transform: translate(3px, 1x) rotate(-0.13deg);
+      }
+      40% {
+        transform: translate(0px, 4px) rotate(0deg);
+      }
+      48% {
+        transform: translate(-2.5px, 2px) rotate(0deg);
+      }
+      56% {
+        transform: translate(-6px, -0px) rotate(0deg);
+      }
+      64% {
+        transform: translate(-2px, 1px) rotate(0deg);
+      }
+      72% {
+        transform: translate(1px, -3px) rotate(0.17deg);
+      }
+      80% {
+        transform: translate(6px, -0px) rotate(0.35deg);
+      }
+      88% {
+        transform: translate(3px, -2px) rotate(0.15deg);
+      }
+      96% {
+        transform: translate(1px, 2px) rotate(0deg);
+      }
+}
+    /* Other option, bettwe with 9 secs
     @keyframes shake {
       0%, 100% {
         transform: translate(0px, 0px) rotate(0deg);
@@ -577,13 +635,13 @@
         transform: translate(1px, 2px) rotate(0deg);
       }
       16% {
-        transform: translate(3px, 3px) rotate(0deg);
+        transform: translate(3px, 3px) rotate(-0.16deg);
       }
       24% {
-        transform: translate(4px, 4px) rotate(0.3deg);
+        transform: translate(4px, 4px) rotate(-0.24deg);
       }
       32% {
-        transform: translate(4px, 4x) rotate(0deg);
+        transform: translate(4px, 4x) rotate(-0.13deg);
       }
       40% {
         transform: translate(3px, 2px) rotate(0deg);
@@ -598,18 +656,18 @@
         transform: translate(-3px, -2px) rotate(0deg);
       }
       72% {
-        transform: translate(-4px, -3px) rotate(0deg);
+        transform: translate(-4px, -3px) rotate(0.17deg);
       }
       80% {
-        transform: translate(-4px, -3px) rotate(-0.3deg);
+        transform: translate(-4px, -3px) rotate(0.25deg);
       }
       88% {
-        transform: translate(-2px, -1px) rotate(0deg);
+        transform: translate(-2px, -1px) rotate(0.15deg);
       }
       96% {
         transform: translate(-1px, 0px) rotate(0deg);
       }
-}
+}*/
     /* FONTS */
 
     /* Body text */
@@ -645,7 +703,7 @@
       font-family: 'Helvetica Neue', sans-serif;
     }
 
-    /* LAZY FIX */
+    /* LAZY FIX. Not working */
     h1, h2, h3 {
       font-family: 'Playfair Display', serif !important;
     }
