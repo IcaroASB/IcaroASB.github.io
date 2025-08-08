@@ -273,7 +273,7 @@
     /* Mobile overrides for tall images */
     @media (max-width: 768px) {
       #modal-content {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         max-height: 95vh;     /* don't spill off-screen */
         overflow-y: auto;
