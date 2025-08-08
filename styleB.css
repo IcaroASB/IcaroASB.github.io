@@ -46,8 +46,8 @@ nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
   padding:2rem 1rem;
   background:rgba(0,0,0,.4);
 }
-.hero-text h1{ margin:0; font-size:2.5rem; }
-.hero-text p{ margin:.5rem 0 0; font-size:1.1rem; }
+.hero-text h1{ margin:0; font-size:4.5rem; }
+.hero-text p{ margin:.5rem 0 0; font-size:2.2rem; }
 
 @media (max-width: 600px) {
   .hero-header { aspect-ratio: 5 / 3; }   /* a bit shorter than 4/3 */
@@ -259,10 +259,12 @@ body h1, body h2, body h3, .hero-text h1, .form-title{ font-family:'Playfair Dis
 @media (max-width:768px){
 
   #modal{
-    padding-top: 10vh;        /* <-- add this */
-    padding-right: 1rem;
-    padding-bottom: 2rem;
-    padding-left: 1rem;
+    /* stack from the very top, but with a fixed cushion */
+    align-items: flex-start;
+    padding-top: clamp(56px, 10vh, 96px);
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
 
   #modal-content{
