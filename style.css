@@ -48,7 +48,7 @@
       color: #eee;
       text-decoration: none;
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
 
     @media (min-width: 768px) {
@@ -332,10 +332,25 @@
       transform: translateX(-50%);
       display: inline-flex;    /* line up title + status */
       gap: 0.5rem;
-      z-index: 5;
+      align-items: baseline;
       /*text-align: center; */
-      pointer-events: none;
-      
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      /* make sure it can't grow wider than the image */
+      max-width: 110%;
+    }
+
+    /* belt-and-suspenders so neither piece wraps */
+    #modal-art-title,
+    #modal-art-status {
+      white-space: nowrap;
+    }
+
+    /* optional: nudge size down a hair on small screens */
+    @media (max-width: 600px) {
+      .modal-overlay-text { font-size: 0.95em; max-width: 100%; }
     }
 
     .modal-image-wrapper img {
