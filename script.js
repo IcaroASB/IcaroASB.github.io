@@ -18,15 +18,16 @@
         .then(data => {
           gallery.innerHTML = '';
           description.textContent = data.description || '';
+
           data.artworks.forEach(art => {
             const div = document.createElement('div');
             div.className = 'art-piece';
 
-            // build the slides
+            // 1) build the slides
             const slides = art.filenames.map((fn, idx) => `
-              <img 
-                src="images/${fn}" 
-                class="carousel-img${idx===0?' active':''}" 
+              <img
+                src="images/${fn}"
+                class="carousel-img${idx === 0 ? ' active' : ''}"
                 data-index="${idx}"
                 onclick='openModal(
                   event,
@@ -39,6 +40,7 @@
               />
             `).join('');
 
+            // 2) inject carousel + caption + details
             div.innerHTML = `
               <div class="carousel">
                 <button class="carousel-prev" onclick="prevSlide(this)">‹</button>
@@ -56,6 +58,7 @@
           gallery.innerHTML = '<p style="color: red;">Error loading collection.</p>';
         });
     }
+
 
 
 
