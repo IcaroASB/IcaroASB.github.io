@@ -48,7 +48,13 @@
       color: #eee;
       text-decoration: none;
       font-weight: bold;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
+    }
+
+    @media (min-width: 768px) {
+      nav a {
+        font-size: 1.5rem;
+      }
     }
 
     /* Currently not in use, but here for ref
@@ -315,6 +321,7 @@
     .modal-image-wrapper {
       position: relative;
       margin-bottom: 2rem;
+      display: inline-block;
     }
 
 
@@ -496,7 +503,7 @@
     .modal-image-wrapper .modal-nav {
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translate(-50%, -50%);
       background: rgba(0,0,0,0.5);
       border: none;
       color: white;

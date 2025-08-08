@@ -1,0 +1,42 @@
+{
+  "description": "A series of cool charcoal portraits capturing quiet emotions and subtle expressions.",
+  "artworks": 
+  [
+    {
+      "title": "Centosaurus Skull",
+      "status": "Avaliable - $800",
+      "details":  "18×24 in · Charcoal on paper",
+      "filenames": ["cento_skull.jpg","cento_skull_1.jpg","cento_skull_2.jpg"]
+    },
+    {
+      "title": "City Bards",
+      "status": "Sold - $600",
+      "details": "18×24 in · Charcoal on paper",
+      "filenames": ["city_bards.jpg","city_bards_1.jpg","city_bards_2.jpg"]
+    },
+    {
+      "title": "Easter's Eve",
+      "status": "Sold - $900",
+      "details": "18×24 in · Charcoal on paper",
+      "filenames": ["easters_eve.jpg","easters_eve_1.jpg","easters_eve_2.jpg"]
+    },
+    {
+      "title": "Hot Dogs on Columbus",
+      "status": "Avaliable - $500",
+      "details": "18×24 in · Charcoal on paper",
+      "filenames": ["hot_dogs_columbus.jpg","hot_dogs_columbus_1.jpg","hot_dogs_columbus_2.jpg"]
+    },
+    {
+      "title": "Portrait for a Friend",
+      "status": "Sold - $600",
+      "details": "18×24 in · Charcoal on paper",
+      "filenames": ["portrait_of_friend.jpg","portrait_of_friend_1.jpg","portrait_of_friend_2.jpg","portrait_of_friend_3.jpg","portrait_of_friend_4.jpg"]
+    },
+    {
+      "title": "Memento Mori",
+      "status": "Avaliable - $400",
+      "details": "11×14 in · Charcoal on paper",
+      "filenames": ["memento_mori.jpg","memento_mori_1.jpg","memento_mori_2.jpg"]
+    }
+  ]
+}
