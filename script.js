@@ -39,12 +39,15 @@
             `).join('');
 
             div.innerHTML = `
-              <div class="carousel">
-                <button class="carousel-prev" onclick="prevSlide(this)">&#10094;</button>
-                ${slides}
-                <button class="carousel-next" onclick="nextSlide(this)">&#10095;</button>
-              </div>
+              <img src="images/${art.filename}" … onclick="openModal(
+                event,
+                '${art.filename}',
+                '${art.title}',
+                '${art.status}',
+                \`${art.details}\`
+              )" />
               <p class="caption">"${art.title}" — ${art.status}</p>
+              <p class="details">${art.details}</p>
             `;
 
             gallery.appendChild(div);
@@ -84,7 +87,7 @@
       });
     });
 
-    function openModal(event, filenames, title, status) {
+    function openModal(event, filename, title, status, details) {
       event.stopPropagation();
       modal.style.display = 'flex';
 
@@ -98,6 +101,7 @@
 
       document.getElementById("modal-art-title").textContent = title || "";
       document.getElementById("modal-art-status"). textContent = status || "";
+      document.getElementById("modal-art-details").textContent = details || '';
     }
 
     function modalNext() {

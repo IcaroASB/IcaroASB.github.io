@@ -348,6 +348,26 @@
       line-height: 1;
     }
 
+    /* thumbnail-grid extra line */
+    .details {
+      text-align: center;
+      font-style: normal;
+      opacity: 0.8;
+      margin-top: 0.25rem;
+      font-size: 0.9rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* zoom-modal details */
+    .modal-details {
+      text-align: center;
+      font-style: normal;
+      opacity: 0.8;
+      margin: 0.5rem 0 1rem;
+      font-size: 1rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
 
     .form-title {
       margin: 0.5rem 0;
@@ -424,12 +444,24 @@
       position: relative;
     }
 
-    .art-piece { position: relative; max-width: 300px; margin: 1rem; }
+    .art-piece {
+      position: relative;
+      max-width: 300px;
+      margin: 1rem;
+    }
+
     /* hide all slides by default */
-    .carousel-img { display: none; width: 100%; height: auto; }
+    .carousel-img {
+      display: none;
+      width: 100%;
+      height: auto;
+    }
     /* show only the active one */
-    .carousel-img.active { display: block; }
-    /* buttons */
+    .carousel-img.active {
+      display: block;
+    }
+
+    /* buttons (both page & modal share these now) */
     .carousel-prev,
     .carousel-next {
       position: absolute;
@@ -438,33 +470,23 @@
       background: rgba(0,0,0,0.5);
       border: none;
       color: white;
-      font-size: 1.5rem;
-      padding: 0.5rem;
-      cursor: pointer;
-      z-index: 2;
-    }
-    .carousel-prev { left: 0.5rem; }
-    .carousel-next { right: 0.5rem; }
-
-    /* modal carousel navigation */
-    .modal-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      border: none;
-      color: white;
-      font-size: 2rem;
+      font-size: 1.8rem;
       width: 2.5rem;
       height: 2.5rem;
+      line-height: 2.5rem;
+      text-align: center;
       border-radius: 50%;
       cursor: pointer;
-      z-index: 12;
+      z-index: 5;
     }
-    #modal-prev { left: 1rem; }
-    #modal-next { right: 1rem; }
-    .modal-nav:hover { background: rgba(0,0,0,0.8); }
 
+    .carousel-prev {
+      left: 0.5rem;
+    }
+
+    .carousel-next {
+      right: 0.5rem;
+    }
     /* FONTS */
 
     /* Body text */
