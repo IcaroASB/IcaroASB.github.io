@@ -22,7 +22,7 @@
       position: relative;
       width: 100%;
       overflow: hidden;
-      aspect-ratio: 4 / 3; /* adjust as needed, or use height for stricter control */
+      height: auto
     }
 
     nav {
@@ -84,12 +84,12 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      object-fit: cover; /* keeps aspect ratio and fills */
+      object-fit: contain; /* show full image without cutting */
       top: 0;
       left: 0;
       z-index: 1;
       animation: shake 30s linear infinite;
-      /*transform-origin: center center;*/
+      background-color: black; /* fills any empty space */
     }
 
     .hero-text {
@@ -271,6 +271,17 @@
       position: relative;
     }
 
+    /* Mobile overrides for tall images */
+    @media (max-width: 768px) {
+      #modal-content {
+        flex-direction: column;
+        align-items: center;
+        max-height: 95vh;     /* don't spill off-screen */
+        overflow-y: auto;
+        padding: 1rem;
+      }
+    }
+
     #modal-content img {
       max-width: 100%;
       max-height: 70vh;
@@ -355,9 +366,18 @@
 
     .modal-image-wrapper img {
       display: block;
-      width: 100%;
+      max-height: 85vh;   /* your original desktop sizing */
+      width: auto;
       height: auto;
+      object-fit: contain;
       border: 3px solid white;
+    }
+
+    /* Mobile override for tall images */
+    @media (max-width: 768px) {
+      .modal-image-wrapper img {
+        max-height: 80vh; /* slightly less so there's room for the close button */
+      }
     }
 
     #modal-art-title {
@@ -513,13 +533,12 @@
     }
 
 
-    /* override the full-screen positioning */
-    /* buttons now absolutely positioned INSIDE the wrapper */
+    /* ===== Modal Navigation Arrows ===== */
     .modal-image-wrapper .modal-nav {
       position: absolute;
       top: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.5);
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
       border: none;
       color: white;
       font-size: 2rem;
@@ -530,29 +549,25 @@
       border-radius: 50%;
       cursor: pointer;
       z-index: 12;
+      margin-top: 0.5rem;
+      font-style: normal;
+      opacity: 0.85;
+      font-size: 1rem;
+      font-family: 'Cormorant Garamond', serif;
     }
 
     .modal-image-wrapper #modal-prev {
-      left: 0.5rem;
+      left: 0.5rem; /* inside the left edge of the image */
     }
 
     .modal-image-wrapper #modal-next {
-      right: 0.5rem;
+      right: 0.5rem; /* inside the right edge of the image */
     }
 
-/* details caption under the image */
-.modal-image-wrapper .modal-details {
-  text-align: center;
-  position: absolute;
-  bottom: -1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0;
-  font-style: normal;
-  opacity: 0.8;
-  font-size: 1rem;
-  font-family: 'Cormorant Garamond', serif;
-}
+    .modal-nav:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
     /* FONTS */
 
     /* Body text */
