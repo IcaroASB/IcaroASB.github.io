@@ -1,686 +1,306 @@
-    body {
-      background-color: #111;
-      color: #eee;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Auto section backgorund tint. Optional. Can also control individually, add images, etc */
-    /* even sections get a very subtle dark gray tint */
-    section:nth-of-type(even) {
-      background-color: rgba(255,255,255,0.03);
-    }
-
-    /* odd sections stay pure black (or you could give them a different tint) */
-    section:nth-of-type(odd) {
-      background-color: rgba(0,0,0,0);
-    }
-
-
-
-    nav {
-      background-color: #000;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-    }
-
-    nav ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav ul li {
-      position: relative;
-    }
-
-    nav a {
-      color: #eee;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-    }
-
-    @media (min-width: 768px) {
-      nav a {
-        font-size: 1.5rem;
-      }
-    }
-
-    /* Currently not in use, but here for ref
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #111;
-      padding: 0.5rem;
-      top: 120%;
-      left: 0;
-      min-width: 160px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-      z-index: 99;
-    }
-
-    .dropdown-content a {
-      display: block;
-      padding: 0.3rem 0.5rem;
-    }
-
-    .dropdown:hover .dropdown-content,
-    .dropdown-content:hover {
-      display: block;
-    }    */
-
-    .hero-header {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      aspect-ratio: 21 / 9;       /* <-- this restores the old behavior */
-      /* or: min-height: clamp(240px, 35vh, 520px); */
-    }
-
-    /* THE BANNER IMAGE — fill width, keep full height (no crop) */
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;     /* back to cover */
-      z-index: 1;
-      animation: shake 30s linear infinite;
-    }
-
-    /* text sits above the image */
-    .hero-text {
-      position: relative;        /* keep */
-      z-index: 2;                /* keep */
-      text-align: center;
-      color: white;
-      padding: 2rem 1rem;
-      background: rgba(0,0,0,0.4);
-    }
-
-    .hero-text h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
-
-    .hero-text p {
-      margin: 0.5rem 0 0;
-      font-size: 1.1rem;
-    }
-        
-
-    .collections-section {
-      padding: 0rem 0rem 0;
-    }
-
-    .collections-section h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      padding-left: 1.5rem;
-    }
-
-    .collections-bar {
-      height: 2.8rem;
-      justify-content: center;
-      display: flex;
-      overflow-x: auto;
-      white-space: nowrap;
-      background-color: #222;
-      scrollbar-width: none;
-      position: relative;
-      padding: 0; 
-    }
-
-    .collections-bar::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* Fading Edges */
-    .collections-bar::before,
-    .collections-bar::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 1rem;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .collections-bar::before {
-      left: 0;
-      background: linear-gradient(to right, #111, transparent);
-    }
-
-    .collections-bar::after {
-      right: 0;
-      background: linear-gradient(to left, #111, transparent);
-    }
-
-    .collection-tab {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #bbb;
-      background-color: #222;
-      border-left: 1px solid #555;
-      border-right: 1px solid #555;
-      margin: 0;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      flex-shrink: 0;
-      height: 100%;
-      box-sizing: border-box;
-      padding: 0 1.2rem; 
-    }
-
-    .collection-tab:first-child {
-      border-left: none;
-    }
-
-    .collection-tab:last-child {
-      border-right: none;
-    }
-
-    .collection-tab.active {
-      background-color: #444;
-      color: #fff;
-      box-shadow: none
-    }
-
-    .collection-tab:hover {
-      background-color: #333;
-    }
-
-    .collection-description {
-      padding-left: 1.5rem;
-    }
-
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      padding: 2rem 1rem;
-    }
-
-    .art-piece img {
-      height: 200px;
-      object-fit: cover;
-      cursor: pointer;
-      border: 2px solid #444;
-      transition: transform 0.3s ease;
-    }
-
-    .art-piece img:hover {
-      transform: scale(1.05);
-    }
-
-    .caption {
-      text-align: center;
-      margin-top: 0.5rem;
-      color: #bbb;
-      font-style: italic;
-      font-size: 0.9rem;
-    }
-
-    #modal {
-      position: fixed;
-      display: none;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.9);
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 10;
-    }
-
-    #modal img {
-      max-width: 90%;
-      max-height: 70%;
-      margin-bottom: 1rem;
-      border: 3px solid white;
-    }
-
-    .inquiry-button {
-      padding: 0.5rem 1rem;
-      background-color: #444;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .inquiry-button:hover {
-      background-color: #666;
-    }
- 
-    #modal-content {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 2rem;
-      max-width: 90%;
-      flex-wrap: wrap;
-      justify-content: center;
-      position: relative;
-    }
-
-    /* Mobile overrides for tall images */
-    @media (max-width: 768px) {
-      #modal-content {
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 1rem;
-        max-width: 100%;
-        max-height: none;   /* let the page scroll instead of cramping the modal */
-        overflow: visible;  /* avoid weird clipping of the title overlay */
-        padding: 1rem;
-        flex-wrap: nowrap;  /* prevent side‑by‑side wrapping */
-      }
-
-      .modal-image-wrapper,
-      .modal-form-container {
-        width: 100%;
-        max-width: 640px;   /* nice readable width */
-      }
-
-      .modal-image-wrapper img {
-        max-height: 80vh;   /* room for the close button */
-        width: 100%;
-        height: auto;
-      }
-    }
-
-    .modal-form-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-      max-width: 300px;
-      color: white;
-    }
-
-    .modal-form-container label {
-      display: flex;
-      flex-direction: column;
-      font-size: 0.9rem;
-    }
-
-    .modal-form-container input,
-    .modal-form-container textarea {
-      margin-top: 0.3rem;
-      padding: 0.4rem;
-      background: #222;
-      border: 1px solid #555;
-      color: white;
-      border-radius: 4px;
-      font-size: 0.9rem;
-    }
-
-    .modal-form-container button {
-      background-color: #444;
-      color: white;
-      border: none;
-      padding: 0.5rem;
-      margin-top: 0.5rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.95rem;
-    }
-
-    .modal-form-container button:hover {
-      background-color: #666;
-    }
-
-    .modal-image-wrapper {
-      position: relative;
-      margin-bottom: 2rem;
-      display: inline-block;
-    }
-
-
-    .modal-overlay-text {
-      position: absolute;
-      top: -1.75rem;                 /* slightly above the image */
-      left: 50%;
-      transform: translateX(-50%);
-      display: inline-flex;
-      gap: 0.5rem;
-      align-items: baseline;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 110%;
-      z-index: 13;                   /* <-- makes it visible over the image */
-      color: #eee;                   /* ensure readable on dark backdrop */
-      pointer-events: none;          /* clicks go through to image/arrows */
-    }
-
-    /* belt-and-suspenders so neither piece wraps */
-    #modal-art-title,
-    #modal-art-status {
-      white-space: nowrap;
-    }
-
-    /* optional: nudge size down a hair on small screens */
-    @media (max-width: 600px) {
-      .modal-overlay-text { font-size: 0.95em; max-width: 100%; }
-    }
-
-    .modal-image-wrapper img {
-      display: block;
-      max-height: 85vh;   /* your original desktop sizing */
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      border: 3px solid white;
-    }
-
-
-    #modal-art-title {
-      font-weight: bold;
-      margin-bottom: 0.4rem;
-      line-height: 1;
-    }
-
-    #modal-art-status {
-      font-style: italic;
-      opacity: 0.85;
-      line-height: 1;
-    }
-
-    /* thumbnail-grid extra line */
-    .details {
-      text-align: center;
-      font-style: normal;
-      opacity: 0.8;
-      margin-top: 0.25rem;
-      font-size: 0.9rem;
-      font-family: 'Cormorant Garamond', serif;
-    }
-
-    /* zoom-modal details */
-    .modal-details {
-      text-align: center;
-      font-style: normal;
-      opacity: 0.8;
-      margin: 0.5rem 0 1rem;
-      font-size: 1rem;
-      font-family: 'Cormorant Garamond', serif;
-    }
-
-
-    .form-title {
-      margin: 0.5rem 0;
-      color: white;
-      font-size: 1.2rem;
-      text-align: center;
-    }
-
-    .toast {
-      visibility: hidden;
-      min-width: 250px;
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      border-radius: 8px;
-      padding: 1rem;
-      position: fixed;
-      bottom: 40%;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 999;
-      font-size: 1rem;
-      opacity: 0;
-      transition: opacity 0.5s, visibility 0.5s;
-    }
-
-    .toast.show {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    #modal-close {
-      position: absolute;
-      top: -2.5rem;
-      right: -0.8rem;
-      font-size: 2rem;
-      color: white;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      z-index: 11;
-    }
-
-    /* Slightly shift X inward only on larger screens */
-    @media (min-width: 768px) {
-      #modal-close {
-        top: -3.75rem;
-        right: -10%;
-      }
-    }
-
-    #modal-close:hover {
-      color: #ccc;
-    }
-
-    .right-padded {
-      padding-left: 1.5rem;
-    }
-    
-    /* Image carousel  */
-
-    .carousel {
-      position: relative;
-    }
-
-    .art-piece {
-      position: relative;
-      max-width: 300px;
-      margin: 1rem;
-    }
-
-    /* hide all slides by default */
-    .carousel-img {
-      display: none;
-      width: 100%;
-      height: auto;
-    }
-    /* show only the active one */
-    .carousel-img.active {
-      display: block;
-    }
-
-    /* buttons (both page & modal share these now) */
-    .carousel-prev,
-    .carousel-next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      border: none;
-      color: white;
-      font-size: 1.8rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      line-height: 2.5rem;
-      text-align: center;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 5;
-    }
-
-    .carousel-prev {
-      left: 0.5rem;
-    }
-
-    .carousel-next {
-      right: 0.5rem;
-    }
-
-
-    /* ===== Modal Navigation Arrows ===== */
-    .modal-image-wrapper .modal-nav{
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,.55);
-      border: none;
-      color: #fff;
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      z-index: 12;
-      display: flex;                 /* centers the chevron */
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;               /* size of the chevron */
-      line-height: 1;
-    }
-    .modal-image-wrapper #modal-prev { left: .5rem; }
-    .modal-image-wrapper #modal-next { right: .5rem; }
-
-    @media (max-width: 768px) {
-      .modal-image-wrapper .modal-nav{
-        width: 3rem;
-        height: 3rem;
-        font-size: 2.2rem;           /* bigger thumb target */
-      }
-    }
-
-    .modal-image-wrapper .modal-nav:hover {
-      background: rgba(0,0,0,.85);
-    }
-
-    /* FONTS */
-
-    /* Body text */
-    body, p, label, input, textarea, /*button,*/ .collection-description, .caption {
-      font-family: 'Cormorant Garamond', serif;
-    }
-      /* Titles */
-    body h1 {
-      font-size: 2.7rem; /* up from 2.5 */
-    }
-
-    body h2 {
-      font-size: 2rem;
-    }
-
-    body h3 {
-      font-size: 1.5rem;
-    }
-
-    body h1,
-    body h2,
-    body h3,
-    .hero-text h1,
-    .form-title {
-      font-family: 'Playfair Display', serif;
-    }
-
-    label,
-    input,
-    textarea,
-    button {
-      font-size: 1rem; /* up from 0.9 or 0.95 */
-      font-family: 'Helvetica Neue', sans-serif;
-    }
-
-    /* Animation. More erractic, higher amplitude. Make slower (some 30s)*/
-
-    @keyframes shake {
-      0%, 100% {
-        transform: translate(2px, 3px) rotate(0deg);
-      }
-      8% {
-        transform: translate(0px, -1px) rotate(0deg);
-      }
-      16% {
-        transform: translate(3px, 2px) rotate(-0.16deg);
-      }
-      24% {
-        transform: translate(-2px, -1px) rotate(-0.34deg);
-      }
-      32% {
-        transform: translate(3px, 1x) rotate(-0.13deg);
-      }
-      40% {
-        transform: translate(0px, 4px) rotate(0deg);
-      }
-      48% {
-        transform: translate(-2.5px, 2px) rotate(0deg);
-      }
-      56% {
-        transform: translate(-6px, -0px) rotate(0deg);
-      }
-      64% {
-        transform: translate(-2px, 1px) rotate(0deg);
-      }
-      72% {
-        transform: translate(1px, -3px) rotate(0.17deg);
-      }
-      80% {
-        transform: translate(6px, -0px) rotate(0.35deg);
-      }
-      88% {
-        transform: translate(3px, -2px) rotate(0.15deg);
-      }
-      96% {
-        transform: translate(1px, 2px) rotate(0deg);
-      }
+/* ===== Base ===== */
+body{
+  background:#111;
+  color:#eee;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;
+  margin:0;
 }
-    /* Other option, bettwe with 9 secs
-    @keyframes shake {
-      0%, 100% {
-        transform: translate(0px, 0px) rotate(0deg);
-      }
-      8% {
-        transform: translate(1px, 2px) rotate(0deg);
-      }
-      16% {
-        transform: translate(3px, 3px) rotate(-0.16deg);
-      }
-      24% {
-        transform: translate(4px, 4px) rotate(-0.24deg);
-      }
-      32% {
-        transform: translate(4px, 4x) rotate(-0.13deg);
-      }
-      40% {
-        transform: translate(3px, 2px) rotate(0deg);
-      }
-      48% {
-        transform: translate(1px, 1px) rotate(0deg);
-      }
-      56% {
-        transform: translate(-1px, -1px) rotate(0deg);
-      }
-      64% {
-        transform: translate(-3px, -2px) rotate(0deg);
-      }
-      72% {
-        transform: translate(-4px, -3px) rotate(0.17deg);
-      }
-      80% {
-        transform: translate(-4px, -3px) rotate(0.25deg);
-      }
-      88% {
-        transform: translate(-2px, -1px) rotate(0.15deg);
-      }
-      96% {
-        transform: translate(-1px, 0px) rotate(0deg);
-      }
-}*/
+
+/* subtle alternating section tint */
+section:nth-of-type(even){ background:rgba(255,255,255,.03); }
+section:nth-of-type(odd){  background:transparent; }
+
+/* ===== Nav ===== */
+nav{
+  background:#000;
+  padding:1rem;
+  display:flex;
+  justify-content:center;
+}
+nav ul{
+  margin:0; padding:0;
+  list-style:none;
+  display:flex; gap:2rem;
+}
+nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
+@media (min-width:768px){ nav a{ font-size:1.5rem; } }
+
+/* ===== Hero banner (reverted to your aspect ratio) ===== */
+.hero-header{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  aspect-ratio:4/3;            /* adjust this to change banner height */
+}
+.hero-bg{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;            /* fills the box, little crop allowed */
+  z-index:1;
+  animation:shake 30s linear infinite;
+}
+.hero-text{
+  position:relative; z-index:2;
+  text-align:center; color:#fff;
+  padding:2rem 1rem;
+  background:rgba(0,0,0,.4);
+}
+.hero-text h1{ margin:0; font-size:4.5rem; }
+.hero-text p{ margin:.5rem 0 0; font-size:2.2rem; }
+
+@media (max-width: 600px) {
+  .hero-header { aspect-ratio: 5 / 3; }   /* a bit shorter than 4/3 */
+  .hero-text { padding: 0.75rem 1rem; }
+  .hero-text h1 { font-size: 1.75rem; }
+  .hero-text p  { font-size: 0.95rem; }
+}
+
+/* ===== Collections bar & grid ===== */
+.collections-section{ padding:0 0 0; }
+.collections-section h2{ font-size:1.5rem; margin-bottom:.5rem; padding-left:1.5rem; }
+
+.collections-bar{
+  height:2.8rem; display:flex; justify-content:center;
+  overflow-x:auto; white-space:nowrap;
+  background:#222; scrollbar-width:none; position:relative; padding:0;
+}
+.collections-bar::-webkit-scrollbar{ display:none; }
+.collections-bar::before,
+.collections-bar::after{
+  content:""; position:absolute; top:0; bottom:0; width:1rem; pointer-events:none; z-index:1;
+}
+.collections-bar::before{ left:0;  background:linear-gradient(to right,#111,transparent); }
+.collections-bar::after{  right:0; background:linear-gradient(to left,#111,transparent); }
+
+.collection-tab{
+  display:flex; align-items:center; justify-content:center;
+  color:#bbb; background:#222; cursor:pointer;
+  border-left:1px solid #555; border-right:1px solid #555;
+  height:100%; padding:0 1.2rem; box-sizing:border-box; flex-shrink:0;
+  transition:background-color .3s;
+}
+.collection-tab:first-child{ border-left:none; }
+.collection-tab:last-child{  border-right:none; }
+.collection-tab:hover{ background:#333; }
+.collection-tab.active{ background:#444; color:#fff; box-shadow:none; }
+
+.collection-description{ padding-left:1.5rem; }
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem 2rem;
+  justify-content: center;
+  padding: 2rem 1rem;
+  margin: 0 auto;
+  max-width: 1200px;  /* forces wrapping after ~3 items */
+}
+
+.art-piece {
+  flex: 0 1 300px;    /* never shrink smaller than 300px */
+  width: 300px;
+}
+
+/* images fill the card width and keep a consistent height */
+.art-piece img{
+  width:100%;
+  height: 300px;              /* tune as you like: 220–300px both look good */
+  object-fit: cover;          /* crop to fill while keeping composition tight */
+  cursor:pointer;
+  border:2px solid #444;
+  transition: transform 0.3s ease;
+}
+
+.art-piece img:hover{ transform:scale(1.05); }
+.caption{
+  text-align:center; margin-top:.5rem; color:#bbb;
+  font-style:italic; font-size:1rem; font-family:'Cormorant Garamond', serif;
+}
+
+/* second line under thumbnail image in the gallery */
+.details {
+  text-align: center;
+  color: #bbb;
+  font-style: italic;                 /* match caption */
+  font-size: 0.9rem;                  /* match caption */
+  font-family: 'Cormorant Garamond', serif;
+  margin-top: 0.25rem;
+  opacity: 0.9;
+}
+
+/* ===== Modal (zoom) ===== */
+#modal{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.9);
+  display:none; justify-content:center; align-items:center;
+  z-index:1000;
+  overflow:auto;               /* allow scroll if needed */
+  padding:3.5rem 1rem 2rem;    /* space for fixed close button + bottom caption */
+}
+
+/* Close/X: fixed to viewport so it never goes off-screen */
+#modal-close{
+  position:fixed; top:1rem; right:1rem;
+  font-size:2rem; color:#fff; background:transparent; border:none; cursor:pointer;
+  z-index:1100;
+}
+#modal-close:hover{ color:#ccc; }
+
+/* Content row on desktop; NEVER wrap on desktop so form stays to the right */
+#modal-content{
+  display:flex; flex-direction:row; align-items:flex-start; justify-content:center;
+  gap:2rem; flex-wrap:nowrap;          /* <- keeps form on the right */
+  max-width:min(1200px,95vw);
+  position:relative;
+}
+
+/* Image wrapper */
+.modal-image-wrapper{
+  position:relative; display:inline-block;
+  width:auto; max-width:70vw; margin-bottom:2rem;
+}
+.modal-image-wrapper img{
+  display:block;
+  max-width:70vw;                /* keeps huge images tamed on desktop */
+  max-height:80vh;
+  width:auto; height:auto;
+  object-fit:contain;
+  border:3px solid #fff;
+}
+
+/* Title + status above image, centered */
+.modal-overlay-text{
+  position:absolute;
+  top:-1.5rem; left:50%; transform:translateX(-50%);
+  display:inline-flex; gap:.5rem; align-items:baseline;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  max-width:110%;
+  color:#eee; z-index:1010; pointer-events:none;
+}
+#modal-art-title{ font-weight:700; line-height:1; }
+#modal-art-status{ font-style:italic; opacity:.85; line-height:1; }
+
+/* details (size/material) under image */
+.modal-details{
+  text-align:center; opacity:.8; margin:.5rem 0 1rem;
+  font-size:1rem; font-family:'Cormorant Garamond',serif;
+}
+
+/* Form on the right (fixed width column) */
+.modal-form-container{
+  display:flex; flex-direction:column; gap:1.5rem;
+  max-width:320px; flex:0 0 320px; color:#fff;
+}
+.modal-form-container label{ display:flex; flex-direction:column; font-size:.9rem; }
+.modal-form-container input,
+.modal-form-container textarea{
+  margin-top:.3rem; padding:.4rem; background:#222; border:1px solid #555; color:#fff;
+  border-radius:4px; font-size:.9rem;
+}
+.modal-form-container button{
+  background:#444; color:#fff; border:none; padding:.5rem; margin-top:.5rem;
+  border-radius:4px; cursor:pointer; font-size:.95rem;
+}
+.modal-form-container button:hover{ background:#666; }
+
+/* Inside-image nav arrows */
+.modal-image-wrapper .modal-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background:rgba(0,0,0,.55); color:#fff; border:none; cursor:pointer;
+  width:2.5rem; height:2.5rem; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:2rem; line-height:1; z-index:1020;
+}
+.modal-image-wrapper #modal-prev{ left:.5rem; }
+.modal-image-wrapper #modal-next{ right:.5rem; }
+.modal-image-wrapper .modal-nav:hover{ background:rgba(0,0,0,.85); }
+
+/* Toast */
+.toast{
+  visibility:hidden; min-width:250px; background:#333; color:#fff; text-align:center;
+  border-radius:8px; padding:1rem; position:fixed; bottom:40%; left:50%;
+  transform:translateX(-50%); z-index:1200; font-size:1rem; opacity:0;
+  transition:opacity .5s, visibility .5s;
+}
+.toast.show{ visibility:visible; opacity:1; }
+
+/* ===== Carousel on grid ===== */
+.carousel{ position:relative; }
+.carousel-img{ display:none; width:100%; height:auto; }
+.carousel-img.active{ display:block; }
+.carousel-prev, .carousel-next{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background:rgba(0,0,0,.5); border:none; color:#fff;
+  font-size:1.8rem; width:2.5rem; height:2.5rem; line-height:2.5rem;
+  text-align:center; border-radius:50%; cursor:pointer; z-index:5;
+}
+.carousel-prev{ left:.5rem; } .carousel-next{ right:.5rem; }
+
+/* ===== Typography (keep) ===== */
+body, p, label, input, textarea, .collection-description, .caption{
+  font-family:'Cormorant Garamond',serif;
+}
+body h1{ font-size:2.7rem; }
+body h2{ font-size:2rem; }
+body h3{ font-size:1.5rem; }
+body h1, body h2, body h3, .hero-text h1, .form-title{ font-family:'Playfair Display',serif; }
+
+/* ===== Mobile layout: force vertical stack, keep title & X visible ===== */
+@media (max-width:768px){
+
+  #modal{
+    /* stack from the very top, but with a fixed cushion */
+    align-items: flex-start;
+    padding-top: clamp(56px, 10vh, 96px);
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+
+  #modal-content{
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    gap:1rem;
+    max-width:100vw;
+    flex-wrap:nowrap;        /* no side-by-side wrapping weirdness */
+    padding:0;               /* modal outer padding already handles breathing room */
+  }
+  .modal-image-wrapper{
+    width:auto; max-width:92vw;
+    margin-top:0rem;         /* room so the title above doesn’t clip. Modal doing it for now */
+    margin-bottom:1.25rem;
+  }
+  .modal-image-wrapper img{
+    max-width:92vw; max-height:70vh; width:100%; height:auto;
+  }
+  .modal-overlay-text{ top:-1.25rem; max-width:100%; }
+  .modal-form-container{ width:92vw; max-width:92vw; flex:0 0 auto; }
+  .modal-image-wrapper .modal-nav{
+    width:3rem; height:3rem; font-size:2.2rem;   /* larger hit target on phones */
+  }
+}
+
+/* ===== Minor utilities ===== */
+.right-padded{ padding-left:1.5rem; }
+
+/* ===== Banner animation (unchanged) ===== */
+@keyframes shake{
+  0%,100%{ transform:translate(2px,3px) rotate(0deg); }
+  8%{   transform:translate(0,-1px) rotate(0deg); }
+  16%{  transform:translate(3px,2px) rotate(-.16deg); }
+  24%{  transform:translate(-2px,-1px) rotate(-.34deg); }
+  32%{  transform:translate(3px,1px) rotate(-.13deg); }
+  40%{  transform:translate(0,4px) rotate(0deg); }
+  48%{  transform:translate(-2.5px,2px) rotate(0deg); }
+  56%{  transform:translate(-6px,0) rotate(0deg); }
+  64%{  transform:translate(-2px,1px) rotate(0deg); }
+  72%{  transform:translate(1px,-3px) rotate(.17deg); }
+  80%{  transform:translate(6px,0) rotate(.35deg); }
+  88%{  transform:translate(3px,-2px) rotate(.15deg); }
+  96%{  transform:translate(1px,2px) rotate(0deg); }
+}
 
 
     /* Interactive whiteboard */
