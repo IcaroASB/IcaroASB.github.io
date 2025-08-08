@@ -90,10 +90,11 @@ nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
 .gallery{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem 2rem;
+  gap: 3rem 2rem;
   padding: 2rem 1rem;
   max-width: 1200px;          /* keeps rows from stretching comically wide */
   margin: 0 auto;             /* center the grid */
+  justify-content:center; 
 }
 
 /* each card fills its grid cell */
@@ -101,6 +102,7 @@ nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
   position:relative;
   width:100%;
   margin:0;                   /* grid gap handles spacing */
+  justify-self:center;
 }
 
 /* images fill the card width and keep a consistent height */
