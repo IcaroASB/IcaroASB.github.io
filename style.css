@@ -94,12 +94,12 @@ nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
   justify-content: center;
   padding: 2rem 1rem;
   margin: 0 auto;
-  max-width: 1200px;  /* forces wrapping after ~3 items */
+  max-width: 1600px;  /* forces wrapping after ~3 items */
 }
 
 .art-piece {
   flex: 0 1 300px;    /* never shrink smaller than 300px */
-  width: 300px;
+  width: 400px;
 }
 
 /* images fill the card width and keep a consistent height */
