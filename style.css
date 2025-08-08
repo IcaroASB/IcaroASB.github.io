@@ -21,8 +21,9 @@
     .hero-header {
       position: relative;
       width: 100%;
-      overflow: hidden;
-      height: auto
+      /* no fixed aspect here, we want the image's natural height */
+      overflow: hidden; /* optional; keeps the overlay from spilling */
+      height: auto;
     }
 
     nav {
@@ -80,26 +81,24 @@
       display: block;
     }    */
 
-    .hero-bg {
-      position: absolute;
+    .hero-header {
+      position: relative;
       width: 100%;
-      height: 100%;
-      object-fit: contain; /* show full image without cutting */
-      top: 0;
-      left: 0;
-      z-index: 1;
-      animation: shake 30s linear infinite;
-      background-color: black; /* fills any empty space */
+      /* no fixed aspect here, we want the image's natural height */
+      overflow: hidden; /* optional; keeps the overlay from spilling */
+      height: auto;
     }
 
-    .hero-text {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      color: white;
-      padding: 2rem 1rem;
-      font-size: 1.2rem;
-      background: rgba(0, 0, 0, 0.4); /* optional soft overlay */
+    /* THE BANNER IMAGE — fill width, keep full height (no crop) */
+    .hero-bg {
+      position: static;          /* was absolute */
+      display: block;
+      width: 100%;
+      height: auto;              /* key: keeps full image height */
+      object-fit: contain;       /* harmless here; height:auto does the work */
+      z-index: 1;
+      animation: shake 30s linear infinite;
+      background-color: black;   /* fills any side bars if aspect ratios differ */
     }
 
     .hero-text h1 {
