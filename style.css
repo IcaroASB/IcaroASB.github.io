@@ -18,12 +18,7 @@
       background-color: rgba(0,0,0,0);
     }
 
-    .hero-header {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      aspect-ratio: 4 / 3;  /* same as before */
-    }
+
 
     nav {
       background-color: #000;
@@ -83,9 +78,9 @@
     .hero-header {
       position: relative;
       width: 100%;
-      /* no fixed aspect here, we want the image's natural height */
-      overflow: hidden; /* optional; keeps the overlay from spilling */
-      height: auto;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;       /* <-- this restores the old behavior */
+      /* or: min-height: clamp(240px, 35vh, 520px); */
     }
 
     /* THE BANNER IMAGE — fill width, keep full height (no crop) */
@@ -97,6 +92,16 @@
       object-fit: cover;     /* back to cover */
       z-index: 1;
       animation: shake 30s linear infinite;
+    }
+
+    /* text sits above the image */
+    .hero-text {
+      position: relative;        /* keep */
+      z-index: 2;                /* keep */
+      text-align: center;
+      color: white;
+      padding: 2rem 1rem;
+      background: rgba(0,0,0,0.4);
     }
 
     .hero-text h1 {
@@ -271,18 +276,28 @@
     /* Mobile overrides for tall images */
     @media (max-width: 768px) {
       #modal-content {
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
-        max-height: 95vh;     /* don't spill off-screen */
-        overflow-y: auto;
+        justify-content: flex-start;
+        gap: 1rem;
+        max-width: 100%;
+        max-height: none;   /* let the page scroll instead of cramping the modal */
+        overflow: visible;  /* avoid weird clipping of the title overlay */
         padding: 1rem;
+        flex-wrap: nowrap;  /* prevent side‑by‑side wrapping */
       }
-    }
 
-    #modal-content img {
-      max-width: 100%;
-      max-height: 70vh;
-      object-fit: contain;
+      .modal-image-wrapper,
+      .modal-form-container {
+        width: 100%;
+        max-width: 640px;   /* nice readable width */
+      }
+
+      .modal-image-wrapper img {
+        max-height: 80vh;   /* room for the close button */
+        width: 100%;
+        height: auto;
+      }
     }
 
     .modal-form-container {
@@ -335,19 +350,19 @@
 
     .modal-overlay-text {
       position: absolute;
-      top: -2rem;
+      top: -1.75rem;                 /* slightly above the image */
       left: 50%;
       transform: translateX(-50%);
-      display: inline-flex;    /* line up title + status */
+      display: inline-flex;
       gap: 0.5rem;
       align-items: baseline;
-      /*text-align: center; */
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-
-      /* make sure it can't grow wider than the image */
       max-width: 110%;
+      z-index: 13;                   /* <-- makes it visible over the image */
+      color: #eee;                   /* ensure readable on dark backdrop */
+      pointer-events: none;          /* clicks go through to image/arrows */
     }
 
     /* belt-and-suspenders so neither piece wraps */
@@ -370,12 +385,6 @@
       border: 3px solid white;
     }
 
-    /* Mobile override for tall images */
-    @media (max-width: 768px) {
-      .modal-image-wrapper img {
-        max-height: 80vh; /* slightly less so there's room for the close button */
-      }
-    }
 
     #modal-art-title {
       font-weight: bold;
@@ -464,17 +473,6 @@
       color: #ccc;
     }
 
-    @media (max-width: 768px) {
-      #modal-content {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .modal-form-container {
-        width: 90%;
-      }
-    }
-
     .right-padded {
       padding-left: 1.5rem;
     }
@@ -541,19 +539,23 @@
       width: 2.5rem;
       height: 2.5rem;
       border-radius: 50%;
-      cursor: pointer;
       z-index: 12;
-
-      /* make the chevron big & centered */
-      display: flex;
+      display: flex;                 /* centers the chevron */
       align-items: center;
       justify-content: center;
-      font-size: 2rem;        /* <-- keep ONLY this one */
-      line-height: 1;         /* no weird vertical offset */
+      font-size: 2rem;               /* size of the chevron */
+      line-height: 1;
     }
-
     .modal-image-wrapper #modal-prev { left: .5rem; }
     .modal-image-wrapper #modal-next { right: .5rem; }
+
+    @media (max-width: 768px) {
+      .modal-image-wrapper .modal-nav{
+        width: 3rem;
+        height: 3rem;
+        font-size: 2.2rem;           /* bigger thumb target */
+      }
+    }
 
     .modal-image-wrapper .modal-nav:hover {
       background: rgba(0,0,0,.85);
@@ -592,11 +594,6 @@
     button {
       font-size: 1rem; /* up from 0.9 or 0.95 */
       font-family: 'Helvetica Neue', sans-serif;
-    }
-
-    /* LAZY FIX. Not working */
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif !important;
     }
 
     /* Animation. More erractic, higher amplitude. Make slower (some 30s)*/
