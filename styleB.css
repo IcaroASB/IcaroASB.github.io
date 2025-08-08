@@ -49,6 +49,13 @@ nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
 .hero-text h1{ margin:0; font-size:2.5rem; }
 .hero-text p{ margin:.5rem 0 0; font-size:1.1rem; }
 
+@media (max-width: 600px) {
+  .hero-header { aspect-ratio: 5 / 3; }   /* a bit shorter than 4/3 */
+  .hero-text { padding: 0.75rem 1rem; }
+  .hero-text h1 { font-size: 1.75rem; }
+  .hero-text p  { font-size: 0.95rem; }
+}
+
 /* ===== Collections bar & grid ===== */
 .collections-section{ padding:0 0 0; }
 .collections-section h2{ font-size:1.5rem; margin-bottom:.5rem; padding-left:1.5rem; }
@@ -99,7 +106,7 @@ nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
 #modal{
   position:fixed; inset:0;
   background:rgba(0,0,0,.9);
-  display:flex; justify-content:center; align-items:center;
+  display:none; justify-content:center; align-items:center;
   z-index:1000;
   overflow:auto;               /* allow scroll if needed */
   padding:3.5rem 1rem 2rem;    /* space for fixed close button + bottom caption */
@@ -213,7 +220,15 @@ body h3{ font-size:1.5rem; }
 body h1, body h2, body h3, .hero-text h1, .form-title{ font-family:'Playfair Display',serif; }
 
 /* ===== Mobile layout: force vertical stack, keep title & X visible ===== */
-@media (max-width:900px){
+@media (max-width:768px){
+
+  #modal{
+    padding-top: 10vh;        /* <-- add this */
+    padding-right: 1rem;
+    padding-bottom: 2rem;
+    padding-left: 1rem;
+  }
+
   #modal-content{
     flex-direction:column;
     align-items:center;
@@ -225,7 +240,7 @@ body h1, body h2, body h3, .hero-text h1, .form-title{ font-family:'Playfair Dis
   }
   .modal-image-wrapper{
     width:auto; max-width:92vw;
-    margin-top:2rem;         /* room so the title above doesn’t clip */
+    margin-top:0rem;         /* room so the title above doesn’t clip. Modal doing it for now */
     margin-bottom:1.25rem;
   }
   .modal-image-wrapper img{
