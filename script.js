@@ -21,10 +21,25 @@
           (data.artworks || data).forEach(art => {
             const div = document.createElement('div');
             div.className = 'art-piece';
+
+            // build carousel slides
+            const slides = art.filenames.map((fn, idx) => `
+              <img 
+                src="images/${fn}" 
+                class="carousel-img${idx===0?' active':''}" 
+                data-index="${idx}" 
+              />
+            `).join('');
+
             div.innerHTML = `
-              <img src="images/${art.filename}" alt="${art.title}" onclick="openModal(event, '${art.filename}', '${art.title}')" />
+              <div class="carousel">
+                <button class="carousel-prev" onclick="prevSlide(this)">&#10094;</button>
+                ${slides}
+                <button class="carousel-next" onclick="nextSlide(this)">&#10095;</button>
+              </div>
               <p class="caption">"${art.title}" — ${art.status}</p>
             `;
+
             gallery.appendChild(div);
           });
         })
@@ -33,6 +48,27 @@
         });
     }
 
+    function nextSlide(btn) {
+      const carousel = btn.parentNode;
+      const imgs     = carousel.querySelectorAll('.carousel-img');
+      let active     = carousel.querySelector('.carousel-img.active');
+      let idx        = +active.dataset.index;
+      active.classList.remove('active');
+      idx = (idx + 1) % imgs.length;
+      imgs[idx].classList.add('active');
+    }
+
+    function prevSlide(btn) {
+      const carousel = btn.parentNode;
+      const imgs     = carousel.querySelectorAll('.carousel-img');
+      let active     = carousel.querySelector('.carousel-img.active');
+      let idx        = +active.dataset.index;
+      active.classList.remove('active');
+      idx = (idx - 1 + imgs.length) % imgs.length;
+      imgs[idx].classList.add('active');
+    }
+
+
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         setActiveTab(tab);
@@ -40,16 +76,32 @@
       });
     });
 
-    function openModal(event, filename, title, status) {
+    function openModal(event, filenames, title, status) {
       event.stopPropagation();
       modal.style.display = 'flex';
 
-      modalImg.src = `images/${filename}`;
+      // store the set and start at index 0
+      modal.currentSet = filenames;
+      modal.currentIdx = 0;
+
+      // show the first image
+      modalImg.src = `images/${filenames[0]}`;
       formArtTitle.value = title;
 
-      // Set the overlay title and status
       document.getElementById("modal-art-title").textContent = title || "";
-      document.getElementById("modal-art-status").textContent = status || "";
+      document.getElementById("modal-art-status"). textContent = status || "";
+    }
+
+    function modalNext() {
+      const set = modal.currentSet;
+      modal.currentIdx = (modal.currentIdx + 1) % set.length;
+      modalImg.src = `images/${set[modal.currentIdx]}`;
+    }
+
+    function modalPrev() {
+      const set = modal.currentSet;
+      modal.currentIdx = (modal.currentIdx - 1 + set.length) % set.length;
+      modalImg.src = `images/${set[modal.currentIdx]}`;
     }
 
     function closeModal(event) {
