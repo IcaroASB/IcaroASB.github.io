@@ -314,7 +314,9 @@
 
     .modal-image-wrapper {
       position: relative;
+      margin-bottom: 2rem;
     }
+
 
     .modal-overlay-text {
       position: absolute;
@@ -487,6 +489,48 @@
     .carousel-next {
       right: 0.5rem;
     }
+
+
+    /* override the full-screen positioning */
+    /* buttons now absolutely positioned INSIDE the wrapper */
+    .modal-image-wrapper .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      line-height: 2.5rem;
+      text-align: center;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 12;
+    }
+
+    .modal-image-wrapper #modal-prev {
+      left: 0.5rem;
+    }
+
+    .modal-image-wrapper #modal-next {
+      right: 0.5rem;
+    }
+
+/* details caption under the image */
+.modal-image-wrapper .modal-details {
+  text-align: center;
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-style: normal;
+  opacity: 0.8;
+  font-size: 1rem;
+  font-family: 'Cormorant Garamond', serif;
+}
     /* FONTS */
 
     /* Body text */
