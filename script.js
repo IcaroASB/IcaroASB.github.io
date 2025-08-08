@@ -196,6 +196,12 @@
 
     loadCollection('portraits');
 
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('modal');
+      if (modal) modal.style.display = 'none';                // force hidden
+      if (location.hash === '#modal') history.replaceState(null, '', location.pathname); // clear stray hash
+    });
+
 
     /* Int whiteboard for fun*/
 

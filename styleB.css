@@ -88,18 +88,54 @@ nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
 .collection-description{ padding-left:1.5rem; }
 
 .gallery{
-  display:flex; flex-wrap:wrap; justify-content:center;
-  gap:1rem; padding:2rem 1rem;
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem 2rem;
+  padding: 2rem 1rem;
+  max-width: 1200px;          /* keeps rows from stretching comically wide */
+  margin: 0 auto;             /* center the grid */
 }
-.art-piece{ position:relative; max-width:300px; margin:1rem; }
+
+/* each card fills its grid cell */
+.art-piece{
+  position:relative;
+  width:100%;
+  margin:0;                   /* grid gap handles spacing */
+}
+
+/* images fill the card width and keep a consistent height */
 .art-piece img{
-  height:200px; object-fit:cover; cursor:pointer;
-  border:2px solid #444; transition:transform .3s ease;
+  width:100%;
+  height: 300px;              /* tune as you like: 220–300px both look good */
+  object-fit: cover;          /* crop to fill while keeping composition tight */
+  cursor:pointer;
+  border:2px solid #444;
+  transition: transform 0.3s ease;
+}
+
+/* responsive: 2 cols on tablets, 1 on phones */
+@media (max-width: 1100px){
+  .gallery{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px){
+  .gallery{ grid-template-columns: 1fr; }
+  .art-piece img{ height: 300px; }   /* give phones a bit more vertical real estate */
 }
 .art-piece img:hover{ transform:scale(1.05); }
 .caption{
   text-align:center; margin-top:.5rem; color:#bbb;
-  font-style:italic; font-size:.9rem;
+  font-style:italic; font-size:1rem; font-family:'Cormorant Garamond', serif;
+}
+
+/* second line under thumbnail image in the gallery */
+.details {
+  text-align: center;
+  color: #bbb;
+  font-style: italic;                 /* match caption */
+  font-size: 0.9rem;                  /* match caption */
+  font-family: 'Cormorant Garamond', serif;
+  margin-top: 0.25rem;
+  opacity: 0.9;
 }
 
 /* ===== Modal (zoom) ===== */
