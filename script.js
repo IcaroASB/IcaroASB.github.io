@@ -21,7 +21,7 @@
 
           (data.artworks || data).forEach(art => {
             const wrapper = document.createElement('div');
-            wrapper.className = 'art-piece';
+            wrapper.className = 'art-piece reveal';
 
             // carousel container
             const carousel = document.createElement('div');
@@ -88,6 +88,9 @@
 
             gallery.appendChild(wrapper);
           });
+
+          hookUpReveals(); /* for animation scroll */
+
         })
         .catch(() => {
           gallery.innerHTML = '<p style="color: red;">Error loading collection.</p>';
@@ -202,6 +205,40 @@
       if (location.hash === '#modal') history.replaceState(null, '', location.pathname); // clear stray hash
     });
 
+
+    // Reveal-on-scroll
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.15,              // 15% visible
+        rootMargin: '0px 0px -10% 0px'// start a touch early
+      }
+    );
+
+    // Helper to register elements (with optional stagger)
+    function registerReveals(selector, perRow = 3, delayStep = 80) {
+      document.querySelectorAll(selector).forEach((el, i) => {
+        el.classList.add('reveal');
+        // simple stagger based on position in a row
+        const delay = (i % perRow) * delayStep;
+        el.style.transitionDelay = `${delay}ms`;
+        revealObserver.observe(el);
+      });
+    }
+
+    // Call once after your gallery grid is populated (e.g. inside or after loadCollection)
+    function hookUpReveals() {
+      registerReveals('.art-piece', 3, 80); // images/cards
+      registerReveals('.caption', 3, 100);  // captions under them
+      registerReveals('.collection-description, .collections-section h2', 1, 0); // headers/body
+    }
 
     /* Int whiteboard for fun*/
 
