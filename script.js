@@ -12,6 +12,41 @@
       selectedTab.classList.add('active');
     }
 
+    function setupReveals() {
+      // Respect reduced-motion users
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        return;
+      }
+
+      if (!('IntersectionObserver' in window)) {
+        // Fallback: just show them
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        return;
+      }
+
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target); // reveal once
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -10% 0px'
+      });
+
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setupReveals();
+      const modal = document.getElementById('modal');
+      if (modal) modal.style.display = 'none';
+      if (location.hash === '#modal') history.replaceState(null, '', location.pathname);
+    });
+
     function loadCollection(collection) {
       fetch(`collections/${collection}.json`)
         .then(res => res.json())
