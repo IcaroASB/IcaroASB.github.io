@@ -141,9 +141,13 @@ nav a{ color:#eee; text-decoration:none; font-weight:700; font-size:1rem; }
 
 /* Close/X: fixed to viewport so it never goes off-screen */
 #modal-close{
-  position:fixed; top:1rem; right:1rem;
+  position:fixed; top:1rem; right:10%;
   font-size:2rem; color:#fff; background:transparent; border:none; cursor:pointer;
   z-index:1100;
+}
+
+@media (max-width: 600px) {
+  .modal-close { right: 1rem; }
 }
 #modal-close:hover{ color:#ccc; }
 
